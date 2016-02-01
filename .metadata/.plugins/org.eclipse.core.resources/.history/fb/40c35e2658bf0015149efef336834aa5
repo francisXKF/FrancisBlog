@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="/francisBlog/css/fsblog.css">
+    <link rel="stylesheet" href="/francisBlog/css/bootstrap.min.css">
+    <title>首页</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="fs-menu">
+        <nav class="navbar-fixed-top navbar-inverse">
+          <div class="container">
+            <ul class="nav nav-pills">
+              <li role="presentation" class="active"><a href="#">Home</a></li>
+              <li role="presentation"><a href="#">Profile</a></li>
+              <li role="presentation"><a href="#">Messages</a></li>
+              <li  class="fs-float-right" role="presentation"><a class="fs-float-right" href="#">Login</a></li>
+              <li  class="fs-float-right" role="presentation"><a class="fs-float-right" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="fs-top">
+        <div class="fs-top-user fs-float-left">
+          莫显乎微
+        </div>
+      </div>
+          <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span1">
+          hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>
+          <!--Sidebar content-->
+        </div>
+        <div class="span7">
+          hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>hehe<br>
+          <!--Body content-->
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+</html>

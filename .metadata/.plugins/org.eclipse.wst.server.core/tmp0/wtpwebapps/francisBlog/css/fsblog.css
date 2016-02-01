@@ -1,0 +1,81 @@
+.fs-container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.fs-top{
+  width: 100%;
+  height: 150px;
+  background-color: aliceblue;
+  font-size: 2em;
+}
+.fs-float-left{
+  float: left;
+}
+.fs-float-right{
+  float: right;
+}
+.fs-top-user{
+  padding-top: 30px;
+}
+.fs-menu{
+  width: 100%;
+  height: 50px;
+}
+.fs-row-fluid{
+  width: 100%;
+}
+.fs-row-fluid:before,
+.fs-row-fluid:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+.fs-row-fluid:after {
+  clear: both;
+}
+.fs-row-fluid [class*="span"] {
+  display: block;
+  float: left;
+  width: 100%;
+  min-height: 30px;
+  margin-top: 20px;
+  margin-left: 2.127659574468085%;
+  *margin-left: 2.074468085106383%;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: azure;
+}
+.fs-row-fluid [class*="span"]:first-child {
+  margin-left: 0;
+}
+.fs-row-fluid .fs-span1{
+  width: 6.382978723404255%;
+}
+.fs-row-fluid .fs-span2{
+  width: 14.893617021276595%;
+}
+.fs-row-fluid .fs-span3{
+  width: 23.404255319148934%;
+}
+.fs-row-fluid .fs-span4{
+  width: 31.914893617021278%;
+}
+.fs-row-fluid .fs-span5{
+  width: 40.42553191489362%;
+}
+.fs-row-fluid .fs-span6{
+  width: 48.93617021276595%;
+}
+.fs-row-fluid .fs-span7{
+  width: 57.44680851063829%;
+}
+.fs-row-fluid .fs-span8{
+  width: 65.95744680851064%;
+}
+.fs-row-fluid .fs-span9{
+  width: 74.46808510638297%;
+}
+#editor {overflow:scroll; max-height:300px}
