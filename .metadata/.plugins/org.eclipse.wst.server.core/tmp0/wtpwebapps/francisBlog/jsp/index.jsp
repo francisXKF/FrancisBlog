@@ -35,10 +35,7 @@
           <div class="fs-span3">
             日历。。。
             <img src="/francisBlog/img/calendar.jpg">
-            <h3>导航1</h3>
-            <h3>导航2</h3>
-            <h3>导航3</h3>
-            <h3>导航4</h3>
+            <jsp:include page="/jsp/_category.jsp" flush="true" />
             
           </div>
           <div class="fs-span9">

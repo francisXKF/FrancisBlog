@@ -35,7 +35,7 @@
           <div class="fs-span3">
             日历。。。
             <img src="/francisBlog/img/calendar.jpg">
-            <jsp:include page="/jsp/_category.jsp" flush="true" />
+            <jsp: page="/francisBlog/jsp/_category.html" flush="true">
             
           </div>
           <div class="fs-span9">
