@@ -7,28 +7,23 @@
     <link rel="stylesheet" href="/francisBlog/css/fsblog.css">
     <link rel="stylesheet" href="/francisBlog/css/bootstrap.min.css">
     <link rel="stylesheet" href="/francisBlog/css/font-awesome.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/francisBlog/util/simditor/styles/simditor.css">
+    <link rel="stylesheet" href="/francisBlog/util/simditor/styles/font-awesome.min.css">
+    
+    <script src="/francisBlog/js/jquery.min.js"></script>
     <script src="/francisBlog/js/fsblog.js"></script>
-    <script src="/francisBlog/js/bootstrap-wysiwyg.js"></script>
-    <script src="/francisBlog/js/jquery.hotkeys.js"></script>
-    <script src="/francisBlog/js/prettify.js"></script>
+<!--    <script src="/francisBlog/js/require.js"></script>-->
+    <script src="/francisBlog/util/simditor/scripts/module.js"></script>
+    <script src="/francisBlog/util/simditor/scripts/uploader.js"></script>
+    <script src="/francisBlog/util/simditor/scripts/hotkeys.js"></script>
+    <script src="/francisBlog/util/simditor/scripts/simditor.js"></script>
     <!--    <link rel="stylesheet" href="/francisBlog/css/bootstrap.css">-->
     <title>首页</title>
   </head>
   <body>
     <div class="container">
       <div class="fs-menu">
-        <nav class="navbar-fixed-top navbar-inverse">
-          <div class="container">
-            <ul class="nav nav-pills">
-              <li role="presentation" class="active"><a href="#">Home</a></li>
-              <li role="presentation"><a href="#">Profile</a></li>
-              <li role="presentation"><a href="#">Messages</a></li>
-              <li  class="fs-float-right" role="presentation"><a class="fs-float-right" id="login" href="#">Login</a></li>
-              <li  class="fs-float-right" role="presentation"><a class="fs-float-right" href="#">Logout</a></li>
-            </ul>
-          </div>
-        </nav>
+        <%@ include file="../html/_navigation_bar.html" %>
       </div>
       <div class="fs-top">
         <div class="fs-top-user fs-float-left">
@@ -59,7 +54,7 @@
             </div>
             <br>
             <div>
-              <%@include file="_editor.jsp"%>
+              <textarea id="richEditor" placeholder="这里输入内容" data-autosave="editor-content" autofocus required></textarea>
             </div>
             <br>
             <nav>

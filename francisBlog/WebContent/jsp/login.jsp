@@ -4,9 +4,9 @@
 <html lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--    <script src="/francisBlog/js/jquery-2.1.4.min.js"></script>-->
+    <script src="/francisBlog/js/jquery.min.js"></script>
     
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>-->
     <script src="/francisBlog/js/fsblog.js"></script>
     <title>登录</title>
   </head>

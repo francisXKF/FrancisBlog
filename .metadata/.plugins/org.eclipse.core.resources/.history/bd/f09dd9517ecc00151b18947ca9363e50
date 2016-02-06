@@ -1,0 +1,37 @@
+$(document).ready(function(){
+  login();
+  editorAdd();
+});
+
+function login(){
+  $("#login").click(function(){
+    $.ajax({
+      url: "login.jsp",
+      data: {
+        username: "francis",
+        password: "123456"
+      },
+      type: "post",
+      datatype: "json",
+      success: function(data){
+//        $("#testcontent").load("/francisBlog/jsp/index.jsp");
+        $("#testcontent").html('<%@include page="/index.html" %>');
+      },
+      error: function(data){
+        alert("error" + data.username);
+      }
+    });
+  });
+}
+
+function editorAdd(){
+//  require.config({
+//    paths: {
+//      "jquery": "jquery.min.js",
+//      "module": "/francisBlog/util/simditor/module.js",
+//      "hotkeys": "/francisBlog/util/simditor/hotkeys.js",
+//      "uploader": "/francisBlog/util/simditor/uploader.js",
+//    }
+//  });
+  alert("ok");
+}
