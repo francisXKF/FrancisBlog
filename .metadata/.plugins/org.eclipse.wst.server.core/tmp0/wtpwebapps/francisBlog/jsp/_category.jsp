@@ -4,8 +4,8 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="categoryTitle">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#category" href="#categoryOne" aria-expanded="true" aria-controls="categoryOne">
-          Title
+        <a id="categoryTitleA" role="button" data-toggle="collapse" data-parent="#category" href="#categoryOne" aria-expanded="true" aria-controls="categoryOne">
+          文章分类
         </a>
       </h4>
     </div>
@@ -21,14 +21,14 @@
     </div>
   </div>
   <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="categoryTarget">
+    <div class="panel-heading" role="tab" id="categoryTag">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#category" href="#categoryTwo" aria-expanded="false" aria-controls="categoryTwo">
-          target
+        <a id="categoryTagB" class="collapsed" role="button" data-toggle="collapse" data-parent="#category" href="#categoryTwo" aria-expanded="false" aria-controls="categoryTwo">
+          标签
         </a>
       </h4>
     </div>
-    <div id="categoryTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="categoryTarget">
+    <div id="categoryTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="categoryTag">
       <div class="panel-body">
         <span class="label label-default">Default</span>
         <span class="label label-primary">Primary</span>

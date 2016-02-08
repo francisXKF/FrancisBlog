@@ -35,31 +35,22 @@
           <div class="fs-span3">
             日历。。。
             <img src="/francisBlog/img/calendar.jpg">
+            <!--   分类    -->
             <jsp:include page="/jsp/_category.jsp" flush="true" />
             
           </div>
           <div class="fs-span9">
             <ul class="nav nav-tabs">
               <li role="presentation" class="active"><a href="#">已发表文章</a></li>
-              <li role="presentation"><a href="#">写文章</a></li>
+              <li role="presentation"><a id="addArticle" role="button" href="#main">写文章</a></li>
               <li role="presentation"><a href="#">新评论<span class="badge">42</span></a></li>
               <li role="presentation"><a href="#">提示</a></li>
             </ul>
-            
-            <div id="testcontent">
-              <jsp:include page="/jsp/login.jsp" flush="true" />
+            <div id="main" class="">
+              <!--      文章内容        -->
+              
             </div>
-            <br>
-            <div>
-              <textarea id="richEditor" placeholder="这里输入内容" data-autosave="editor-content" autofocus required></textarea>
-            </div>
-            <br>
-            <nav>
-              <ul class="pager">
-                <li><a href="#">Previous</a></li>
-                <li><a href="#">Next</a></li>
-              </ul>
-            </nav>
+
           </div>
         </div>
       </div>

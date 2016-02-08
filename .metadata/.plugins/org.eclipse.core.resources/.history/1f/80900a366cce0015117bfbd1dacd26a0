@@ -31,28 +31,28 @@ function editorAdd(){
     Simditor.locale = 'en-US';
     toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr'];
 //    toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
-//   $('.richEditor').each(function(index, dom){
-//      editor = new Simditor({
-//        textarea: $(dom),
-//        placeholder: '这里输入文字...',
-//        toolbar: toolbar,
-//        pasteImage: true,
-//  //      defaultImage: 'assets/images/image.png',
-//        upload: location.search === '?upload' ? {
-//          url: '/upload'
-//        } : false
-//      });
-//    }); 
-    editor = new Simditor({
-      textarea: $('.editor'),
-      placeholder: '这里输入文字...',
-      toolbar: toolbar,
-      pasteImage: true,
-//      defaultImage: 'assets/images/image.png',
-      upload: location.search === '?upload' ? {
-        url: '/upload'
-      } : false
-    });
+   $('.richEditor').each(function(index, dom){
+      editor = new Simditor({
+        textarea: $(dom),
+        placeholder: '这里输入文字...',
+        toolbar: toolbar,
+        pasteImage: true,
+  //      defaultImage: 'assets/images/image.png',
+        upload: location.search === '?upload' ? {
+          url: '/upload'
+        } : false
+      });
+    }); 
+//    editor = new Simditor({
+//      textarea: $('.editor'),
+//      placeholder: '这里输入文字...',
+//      toolbar: toolbar,
+//      pasteImage: true,
+////      defaultImage: 'assets/images/image.png',
+//      upload: location.search === '?upload' ? {
+//        url: '/upload'
+//      } : false
+//    });
     $preview = $('#preview');
     if ($preview.length > 0) {
       return editor.on('valuechanged', function(e) {
@@ -74,13 +74,9 @@ function categoryOp(){
 
 function articleOp(){
   $('#addArticle').unbind('click').click(function(){
-    $('#main').load("_article_add.jsp", function(responseTxt, statusTxt, xhr){
-      if(statusTxt=="success"){
-        editorAdd();
-      }
-      if(statusTxt=="error"){
-        alert("无法写新文章...");
-      }
+    $('#main').load("_article_add.jsp").ready(function(){
+//      alert("ok");
+      editorAdd();
     });
   });
 }
