@@ -33,8 +33,9 @@
       <div class="container-fluid">
         <div class="fs-row-fluid">
           <div class="fs-span3">
-            日历。。。
-            <img src="/francisBlog/img/calendar.jpg">
+            <div>
+              <%@ include file="../html/_search_bar.html" %>
+            </div>
             <!--   分类    -->
             <jsp:include page="/jsp/_category.jsp" flush="true" />
             

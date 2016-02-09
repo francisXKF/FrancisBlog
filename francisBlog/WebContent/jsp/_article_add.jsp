@@ -5,11 +5,11 @@
   <h2>add article</h2>
   <div>
     <h4>Title:</h4>
-    <input type="text" >
+    <input class="form-control" type="text" >
   </div>
   <div>
     <h4>Tags:</h4>
-    <input type="text" >
+    <input class="form-control" type="text" >
     <div>common tags:a b c </div>
   </div>
   <div>
@@ -18,7 +18,7 @@
   </div>
   <div>
     <h4>privilege</h4>
-    <input type="text" >
+    <input class="form-control" type="text" >
   </div>
   <div>
     <input class="btn btn-info" type="button" value="提交">
