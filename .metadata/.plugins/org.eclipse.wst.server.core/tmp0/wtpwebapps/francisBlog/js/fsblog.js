@@ -73,13 +73,50 @@ function categoryOp(){
 }
 
 function articleOp(){
+  $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
+    if(statusTxt=="success"){
+      articleDetail();
+    }
+    if(statusTxt=="error"){
+      $('#main').load("../html/_404.html");
+    }
+  });
+  
+  $('#listArticle').unbind('click').click(function(){
+    $('.fs-article-bar').removeClass("active");
+    $('#listArticleLi').addClass("active");
+    $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="success"){
+        articleDetail();
+      }
+      if(statusTxt=="error"){
+        $('#main').load("../html/_404.html");
+      }
+    });
+  });
+  
   $('#addArticle').unbind('click').click(function(){
+    $('.fs-article-bar').removeClass("active");
+    $('#addArticleLi').addClass("active");
     $('#main').load("_article_add.jsp", function(responseTxt, statusTxt, xhr){
       if(statusTxt=="success"){
         editorAdd();
       }
       if(statusTxt=="error"){
         alert("无法写新文章...");
+      }
+    });
+  });
+}
+
+function articleDetail(){
+  $('.fs-article-title').unbind('click').click(function(){
+//    var nowId = $(this).attr('id');
+//    alert(nowId);
+//    alert($(this).html());
+    $('#main').load("_article_detail.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="error"){
+        $('#main').load("../html/_404.html");
       }
     });
   });

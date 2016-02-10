@@ -78,4 +78,15 @@
 .fs-row-fluid .fs-span9{
   width: 74.46808510638297%;
 }
-#editor {overflow:scroll; max-height:300px}
+#editor{
+  overflow:scroll; 
+  max-height:300px
+}
+.fs-article-meta{
+  font-family: Georgia, STHeiti, "Microsoft Yahei";
+  font-size: 0.9em;
+  margin-left: 15px;
+}
+.fs-article-title{
+  font-size: 1.35em;
+}
