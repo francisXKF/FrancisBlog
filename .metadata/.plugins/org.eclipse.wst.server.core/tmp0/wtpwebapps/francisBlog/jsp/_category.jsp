@@ -4,7 +4,7 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="categoryTitle">
       <h4 class="panel-title">
-        <a id="categoryTitleA" role="button" data-toggle="collapse" data-parent="#category" href="#categoryOne" aria-expanded="true" aria-controls="categoryOne">
+        <a id="categoryTitleA" role="button" data-toggle="collapse" data-parent="#category" href="#" aria-expanded="true" aria-controls="categoryOne">
           文章分类
         </a>
       </h4>
@@ -23,7 +23,7 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="categoryTag">
       <h4 class="panel-title">
-        <a id="categoryTagB" class="collapsed" role="button" data-toggle="collapse" data-parent="#category" href="#categoryTwo" aria-expanded="false" aria-controls="categoryTwo">
+        <a id="categoryTagB" class="collapsed" role="button" data-toggle="collapse" data-parent="#category" href="#" aria-expanded="false" aria-controls="categoryTwo">
           标签
         </a>
       </h4>

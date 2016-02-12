@@ -3,13 +3,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div>
   <div class="panel panel-default">
-    <div class="panel-heading">写文章:</div>
+    <div class="panel-heading">Comment:</div>
     <div class="panel-body">
       <table>
         <tr>
           <td>
             <div class="panel panel-default">
-              <div class="panel-heading">题目:</div>
+              <div class="panel-heading">Name:</div>
               <div class="panel-body"><input class="form-control" type="text"></div>
             </div>
           </td>
@@ -17,24 +17,15 @@
         <tr>
           <td>
             <div class="panel panel-default">
-              <div class="panel-heading">标签:</div>
+              <div class="panel-heading">Email:</div>
               <div class="panel-body"><input class="form-control" type="text"></div>
-              <div class="panel-body">
-                <small>最近使用标签:</small>
-                <span class="label label-default">Default</span>
-                <span class="label label-primary">Primary</span>
-                <span class="label label-success">Success</span>
-                <span class="label label-info">Info</span>
-                <span class="label label-warning">Warning</span>
-                <span class="label label-danger">Danger</span>
-              </div>
             </div>
           </td>
         </tr>
         <tr>
           <td>
             <div class="panel panel-default">
-              <div class="panel-heading">内容:</div>
+              <div class="panel-heading">Content:</div>
               <div class="panel-body">
                 <textarea class="editor" placeholder="这里输入内容" data-autosave="editor-content" autofocus required></textarea>
               </div>
@@ -43,8 +34,8 @@
         </tr>
       </table>
       <div>
-        <input class="btn btn-info" type="button" value="发布">
-        <input class="btn btn-default pull-right" type="reset" value="取消">
+        <input class="btn btn-info" type="button" value="提交">
+        <input class="btn btn-default pull-right" type="button" value="取消">
       </div>
     </div>
   </div>

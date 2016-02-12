@@ -24,4 +24,12 @@
       <p>目前有一份测试数据，大约2000提交，目测重复的代码很多。</p>
     </div>
   </div>
+  <a href="#commentMain" class="btn btn-info pull-right">评论</a><br>
+  <hr>
+  <div class="fs-comments" id="commentReply">
+    <!--  回复历史信息  -->
+  </div>
+  <div class="fs-comments" id="commentMain">
+    <!-- 评论   -->
+  </div>
 </div>

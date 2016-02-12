@@ -115,6 +115,21 @@ function articleDetail(){
 //    alert(nowId);
 //    alert($(this).html());
     $('#main').load("_article_detail.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="success"){
+        $('.fs-comments').load("_comment.jsp", function(responseTxt, statusTxt, xhr){
+          if(statusTxt=="success"){
+            editorAdd();
+            $('#commentReply').load("_article_reply.jsp", function(responseTxt, statusTxt, xhr){
+              if(statusTxt=="error"){
+                $('#commentReply').load("../html/_404.html");
+              }
+            });
+          }
+          if(statusTxt=="error"){
+            alert("评论加载失败");
+          }
+        });
+      }
       if(statusTxt=="error"){
         $('#main').load("../html/_404.html");
       }
