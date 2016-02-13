@@ -26,25 +26,13 @@ function login(){
 }
 
 function editorAdd(){
-  $(function() {
-    var $preview, editor, toolbar;
-    Simditor.locale = 'en-US';
-    toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr'];
+  var $preview, editor, toolbar;
+  Simditor.locale = 'en-US';
+  toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr'];
 //    toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
-//   $('.richEditor').each(function(index, dom){
-//      editor = new Simditor({
-//        textarea: $(dom),
-//        placeholder: '这里输入文字...',
-//        toolbar: toolbar,
-//        pasteImage: true,
-//  //      defaultImage: 'assets/images/image.png',
-//        upload: location.search === '?upload' ? {
-//          url: '/upload'
-//        } : false
-//      });
-//    }); 
+ $('.editor').each(function(index, dom){
     editor = new Simditor({
-      textarea: $('.editor'),
+      textarea: $(dom),
       placeholder: '这里输入文字...',
       toolbar: toolbar,
       pasteImage: true,
@@ -53,13 +41,23 @@ function editorAdd(){
         url: '/upload'
       } : false
     });
-    $preview = $('#preview');
-    if ($preview.length > 0) {
-      return editor.on('valuechanged', function(e) {
-        return $preview.html(editor.getValue());
-      });
-    }
-  });
+  }); 
+//    editor = new Simditor({
+//      textarea: $('.editor'),
+//      placeholder: '这里输入文字...',
+//      toolbar: toolbar,
+//      pasteImage: true,
+////      defaultImage: 'assets/images/image.png',
+//      upload: location.search === '?upload' ? {
+//        url: '/upload'
+//      } : false
+//    });
+  $preview = $('#preview');
+  if ($preview.length > 0) {
+    return editor.on('valuechanged', function(e) {
+      return $preview.html(editor.getValue());
+    });
+  }
 }
 
 function categoryOp(){
@@ -107,6 +105,20 @@ function articleOp(){
       }
     });
   });
+  
+  $('#replyNewArticle').unbind('click').click(function(){
+    $('.fs-article-bar').removeClass("active");
+    $('#replyNewArticleLi').addClass("active");
+    $('#main').load("_article_new_reply.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="success"){
+        $('#replyNewNum').html("");
+        articleDetail();
+      }
+      if(statusTxt=="error"){
+        $('#main').load("../html/_404.html");
+      }
+    });
+  });
 }
 
 function articleDetail(){
@@ -119,9 +131,9 @@ function articleDetail(){
         $('.fs-comments').load("_comment.jsp", function(responseTxt, statusTxt, xhr){
           if(statusTxt=="success"){
             editorAdd();
-            $('#commentReply').load("_article_reply.jsp", function(responseTxt, statusTxt, xhr){
+            $('#commentsReply').load("_article_reply.jsp", function(responseTxt, statusTxt, xhr){
               if(statusTxt=="error"){
-                $('#commentReply').load("../html/_404.html");
+                $('#commentsReply').load("../html/_404.html");
               }
             });
           }

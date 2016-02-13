@@ -26,9 +26,10 @@
   </div>
   <a href="#commentMain" class="btn btn-info pull-right">评论</a><br>
   <hr>
-  <div class="fs-comments" id="commentReply">
+  <div id="commentsReply">
     <!--  回复历史信息  -->
   </div>
+  <hr>
   <div class="fs-comments" id="commentMain">
     <!-- 评论   -->
   </div>

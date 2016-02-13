@@ -90,3 +90,6 @@
 .fs-article-title{
   font-size: 1.35em;
 }
+.fs-reply-list ul{
+  list-style: none;
+}

@@ -44,7 +44,9 @@
             <ul class="nav nav-tabs">
               <li role="presentation" class="active fs-article-bar" id="listArticleLi"><a href="#" id="listArticle">已发表文章</a></li>
               <li role="presentation" class="fs-article-bar" id="addArticleLi"><a href="#" id="addArticle" role="button">写文章</a></li>
-              <li role="presentation" class="fs-article-bar" id=""><a href="#">新评论<span class="badge">42</span></a></li>
+              <li role="presentation" class="fs-article-bar" id="replyNewArticleLi">
+                <a href="#" id="replyNewArticle">新评论<span class="badge" id="replyNewNum">3</span></a>
+              </li>
               <li role="presentation" class="fs-article-bar" id=""><a href="#">提示</a></li>
             </ul>
             <div id="main" class="">
