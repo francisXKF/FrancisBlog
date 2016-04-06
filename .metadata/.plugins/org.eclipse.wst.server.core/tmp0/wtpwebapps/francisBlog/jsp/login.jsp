@@ -4,22 +4,52 @@
 <html lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="/francisBlog/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/francisBlog/css/fsblog.css">
+    <link rel="stylesheet" href="/francisBlog/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/francisBlog/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/francisBlog/util/simditor/styles/font-awesome.min.css">
     
-<!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>-->
+    <script src="/francisBlog/js/jquery.min.js"></script>
     <script src="/francisBlog/js/fsblog.js"></script>
     <title>登录</title>
+    <style>
+      body{
+        background-image: url(../img/dwddxqtxw.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
   </head>
   <body>
-    <table>
-      <th>
-        <td>name</td>
-        <td>password</td>
-      </th>
-      <tr>
-        <td><input type="text" id="loginusername"></td>
-        <td><input type="password" id="loginpassword"></td>
-      </tr>
-    </table>
+    <div class="container">
+      <div class="fs-menu">
+        <%@ include file="../html/_navigation_bar.html" %>
+      </div>
+      <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default fs-transparency">
+          <div class="panel-heading">
+            <h3 class="panel-title">Hello User</h3>
+          </div>
+          <div class="panel-body">  
+            <form>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </span>
+                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
+                </span>
+                <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+              </div>
+              <input class="btn btn-primary pull-left" type="submit" id="loginSubmit" value="登录">
+              <input class="btn btn-default pull-right" type="reset" value="Reset">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

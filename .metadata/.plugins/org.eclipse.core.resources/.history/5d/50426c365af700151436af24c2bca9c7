@@ -1,0 +1,5 @@
+package com.francis.blog.service;
+
+public class UserManager {
+
+}

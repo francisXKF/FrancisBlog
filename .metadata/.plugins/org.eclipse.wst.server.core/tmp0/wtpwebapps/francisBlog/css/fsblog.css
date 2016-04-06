@@ -93,3 +93,9 @@
 .fs-reply-list ul{
   list-style: none;
 }
+.fs-transparency{
+  background-color:#000000;
+    -moz-opacity:0.8;
+    opacity: 0.8;
+    filter:alpha(opacity=80);
+}

@@ -5,15 +5,17 @@ $(document).ready(function(){
 });
 
 function login(){
-  $("#login").click(function(){
+  $("#loginSubmit").click(function(){
     $.ajax({
-      url: "login.jsp",
+      url: "user.action",
       data: {
-        username: "francis",
-        password: "123456"
+        name: "francis234",
+        password: "1234562",
+        email: "123",
+        linkURL: "qwe",
       },
       type: "post",
-      datatype: "json",
+//      datatype: "json",
       success: function(data){
 //        $("#testcontent").load("/francisBlog/jsp/index.jsp");
         $("#testcontent").html('<%@include page="/index.html" %>');

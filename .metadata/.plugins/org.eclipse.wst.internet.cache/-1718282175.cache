@@ -1,0 +1,319 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<base>
+	<title>欢迎使用</title>
+	<meta http-equiv="content-type" content="text/html; charset=GBK">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="keywords" content=" ">
+	<meta http-equiv="description" content=" ">
+	<link rel="stylesheet" href="/group/css/css.css" type="text/css"></link>
+    <script type='text/javascript' src='/dwr/interface/PasswordService.js'></script>
+	<script type='text/javascript' src='/dwr/interface/SendSmsCode.js'></script> 
+	<script type='text/javascript' src='/dwr/engine.js'></script>
+	<script type='text/javascript' src='/dwr/util.js'></script>
+	<script type='text/javascript' src='/dwr/interface/WlanReportNet.js'></script>
+	<script type='text/javascript'>
+		function $$(id){return document.getElementById(id);}
+		//DWREngine.setAsync(false);
+		function jstrim(s)
+		{
+		    if(s.substr(0,1)==" ")
+		    {
+		        do
+		        {
+		            s=s.substr(1,s.length-1);
+		        }while(s.substr(0,1)==" ")
+		    }
+		
+		    if(s.substring(s.length,s.length-1)==" ")
+		    {
+		        do
+		        {
+		            s=s.substring(0,s.length-1);
+		        }while(s.substring(s.length,s.length-1)==" ")
+		    }
+		
+		    return s;
+		}
+	
+		function callBack(data)
+		{
+		    alert(data);  
+		    
+		          
+		}
+	
+		function sms(flag)
+		{
+		    var username = jstrim(document.getElementById("username").value);
+		    var userReg = /^1[1-9][\d]{9}$/;
+		    if(username == "" || username == "移动手机号")
+		    {
+		        alert("请输入正确的手机号码!");
+		        return false;
+		    }
+		    
+		    if(!username.match(userReg))
+		    {
+		        alert("您输入的号码(" + username + ")不支持申请动态密码!");
+		        return false;
+		    }
+
+		    
+	            
+	            
+	                PasswordService.smsSendPassword(username, callBack);
+	            
+	        
+		}
+		
+		function checkLogin()
+		{
+		    checkLoginData();
+		}
+	
+		function checkUserName()
+		{
+			var regExp = /^[\w]{3,18}$/;
+			var username = document.getElementById("username");
+		    if(username == null || username.value == "" 
+		       || username.value == "移动手机号")
+		    {
+		        alert("请输入正确的手机号码!");
+		        username.select();
+		        return false;
+		    }
+		    if(!username.value.match(regExp))
+		    {
+		        alert("请输入正确的手机号码!");
+		        username.select();
+		        return false;
+		    }
+		    return true;
+		}
+	
+		function checkPassword()
+		{
+			var regExp = /^[\w]{6,16}$/;
+			var password = document.getElementById("password");
+
+			if(!password.value.match(regExp))
+		    {
+		        alert("请输入6-16位长度的密码!");
+		        password.select();
+		        return false;
+		    }
+		    return true;
+		}
+	
+		function checkLoginData()
+		{
+		    var ckunResult = checkUserName();
+		    if(!ckunResult)
+		    {
+		    	return false;
+		    }
+		    
+  		    var ckpwd = checkPassword();
+		    if(!ckpwd)
+		    {
+		    	return false;
+		    }
+		    
+		    
+	            
+	            
+				    document.getElementById("loginForm").submit();
+				    return true;
+	            
+	        
+		}
+	
+		function checkVerifyCode()
+		{
+		    var validate = jstrim($$("VerifyCode").value);
+		    if (validate == "" || validate == '输入验证码')
+		    {
+		        alert("请输入验证码！");
+		        return false;
+		    }
+		    
+		    var retn = false;
+		    SendSmsCode.validateCode($$("VerifyCode").value, function(data){
+		        retn = data;
+		    });
+		    if(!retn)
+		    {
+		        alert("验证码错误！");
+		        $$("VerifyCode").value = "";
+		        $$("VerifyCode").focus();
+		        RefreshImage();
+		        return false;
+		    }
+		    return true;
+		}
+		  
+		function RefreshImage()
+		{
+		    var el = $$("validateimgid");
+		    el.src = el.src + '?';
+		}
+	</script>
+</head>
+<body>
+     
+	
+    <form id="loginForm" name="loginForm" action="/mobilelogin.do" method="post">
+	   
+
+
+<div id="head" style="margin-top: 15px;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		   <td width="47%"><img src="/group/image/logo.jpg" width="160" height="76" /></td>
+		   <td width="53%">
+		     <a href="/group/jsp/group_wifischool_introduce.jsp" target="_blank"><font size="3">业务介绍</font></a>
+		     &nbsp;&nbsp;|&nbsp;&nbsp;
+		     <a href="http://selfportal.sd.chinamobile.com:8002/tellin/usr/login/login.screen" target="_blank"><font size="3">自助服务</font></a>
+		     &nbsp;&nbsp;|&nbsp;&nbsp;
+		     
+		     <a href="http://www.sd.10086.cn/wlansearch/" target="_blank"><font size="3">热点查询</font></a>
+		   </td>
+		</tr>
+	</table>
+</div>
+	   	<div id="main" style="margin-top: 15px;">
+		   	<br>
+			
+
+
+
+<div id="right">
+	<TABLE class=login_right border=0 cellSpacing=0 cellPadding=0 width="100%" height=414>
+		<TBODY>
+			<TR>
+			   <TD height=138 colSpan=3>&nbsp;</TD>
+			</TR>
+			<TR>
+			    <TD height=41 width=36 align="right">&nbsp;</TD>
+			 	<TD align="left" colspan="2">
+			 	    
+						    
+							    <span style="color: red">
+								    为保护您的个人信息安全，请使用动态密码登录。
+								</span>
+						    
+						    
+						
+			 	    <!--
+			 	       <span style="color: red">&nbsp;&nbsp;山东省WLAN客户登录时，仅可使用短信动态密码。</span>
+			 	    -->
+			 	</TD>
+		    </TR>
+			<TR>
+				<TD height=32 align=middle>&nbsp;</TD>
+				<TD height=32 align="right"><SPAN class=login_title>手机号码&nbsp;</SPAN></TD>
+				<TD height=32 align=left><INPUT id="username" class="input gray" name="username" value="" maxlength="18"></TD>
+		    </TR>
+			<TR>
+				<TD height=32 align=middle>&nbsp;</TD>
+				<TD height=32 align="right"><SPAN class=login_title>密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;</SPAN></TD>
+				<TD height=32 align=left>
+				  <INPUT id="password" class="input gray" value="" type=password name="password" maxlength="16">
+				</TD>
+			</TR>
+			
+			<TR>
+				<TD height=31 align=middle>&nbsp;</TD>
+				<TD height=31 align=middle></TD>
+				<TD height=31 align=left>
+				   <INPUT id=applyGetPwd class=dynapsw_btn onclick="return sms(this);" value=发送动态密码到手机 type=button>
+			    </TD>
+			<TR>
+				<TD height=28 vAlign=top colSpan=2 align=middle></TD>
+			    <TD height=28 vAlign=center align=left><INPUT id=isSaveCookie value=save type=checkbox name=isSaveCookie>自动登录&nbsp;<A class=auto_login href="/group/jsp/group_selflogin_introduce.jsp" target="_blank">自动登录功能介绍</A></TD></TR>
+			<TR>
+				<TD height=48 colSpan=2 align=middle></TD>
+			    <TD height=48 align=left><INPUT class=logout onclick=checkLogin() value=登录 type=button></TD></TR>
+			<TR>
+				<TD height=45 colSpan=3>&nbsp;</TD>
+			</TR>
+		</TBODY>
+	</TABLE>
+</div>
+			
+
+<div id="left">
+	<TABLE class=login_left border=0 cellSpacing=0 cellPadding=0 width="100%" height=314>
+		<TBODY>
+			<TR>
+			  <TD height=20 colspan="1">
+			  &nbsp;
+			  </TD>
+			</TR>
+			<TR>
+			  <TD height=173 vAlign=bottom width=440 align=left colspan="1">
+			      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国移动随e行无线宽带业务，
+			      是中国移动推出的一种高速无线上网业务，在有中国移动WLAN信号覆盖区域，
+			      用户可通过支持WLAN的笔记本、手机等各类终端，便捷快速地接入互联网，
+			      从而进行信息获取、娱乐或移动办公。
+			  </TD>
+			</TR>
+			<TR>
+			  <TD height=67 align="center">
+			      <INPUT class=view onclick="window.open('group/jsp/group_wifischool_introduce.jsp','','')" value=查看简介及开通方式 type=button>
+			  </TD>
+			  <TD height=67 align="center">
+			      &nbsp;
+			  </TD>
+			</TR>
+			<TR>
+			  <TD height=20 align="center" width="100"><a href="/group/jsp/cmccedu_register.jsp" class=auto_login target="_blank" style="color: red">新用户注册</a></TD>
+			  <TD height=20 align="left" width="250"><a href="http://selfportal.sd.chinamobile.com:8002/tellin/usr/login/login.screen" class=auto_login target="_blank" style="color: blue;">用户自助服务</a></TD>
+			</TR>
+		    <TR>
+			  <TD height=20 align="center" width="100"><a href="/group/jsp/cmccedu_findPswd.jsp" class=auto_login target="_blank" style="color: blue;">找回密码&nbsp;&nbsp;</a></TD>
+			  
+			</TR>
+		</TBODY>
+	</TABLE>
+</div>
+	   </div>
+	   
+<div id="foot">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td width="47%" align="center">鲁ICP备&nbsp; 09094049号-16&nbsp;中国移动通信版权所有</td>
+	  </tr>
+	</table>  
+</div>
+	    
+	    <input type="hidden" name="wlanuserip" id="wlanuserip" value="223.81.77.156"/>
+        <input type="hidden" name="wlanacname" id="wlanacname" value="0003.0532.531.00"/>
+        <input type="hidden" name="wlanparameter" id="wlanparameter" value="9e787eb8892053bebf4c82a9d52bccc2000d025e2450c0c8"/>
+        <input type="hidden" name="wlanuserfirsturl" id="wlanuserfirsturl" value="http://www.baidu.com"/>
+        <input type="hidden" name="ssid" id="ssid" value="cmcc-edu"/>
+        <input type="hidden" name="loginpage" id="loginpage" value="/cmcceduLogin.jsp"/>
+        <input type="hidden" name="indexpage" id="indexpage" value="/group/jsp/cmccedu_index.jsp"/>
+	<input type='hidden' name='CSRFToken_HW' value='c1c20a1c04873b21a89d97bcd97527c1' /></form>
+</body>
+
+<script type="text/javascript">
+    if ("pc" == 'pc')
+    {
+        WlanReportNet.reportNet('223.81.77.156', '2016-03-28 23:03:16:607');
+    }
+</script>
+
+</html>

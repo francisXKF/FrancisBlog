@@ -12,6 +12,7 @@
     <div id="categoryOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="categoryTitle">
       <div class="panel-body">
         <ul class="nav nav-pills nav-stacked">
+          <li role="presentation"><a href="#">All</a></li>
           <li role="presentation"><a href="#">category_one</a></li>
           <li role="presentation"><a href="#">category_two</a></li>
           <li role="presentation"><a href="#">category_three</a></li>

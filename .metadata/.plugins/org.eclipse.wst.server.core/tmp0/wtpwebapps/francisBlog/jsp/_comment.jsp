@@ -18,7 +18,15 @@
           <td>
             <div class="panel panel-default">
               <div class="panel-heading">Email:</div>
-              <div class="panel-body"><input class="form-control" type="text"></div>
+              <div class="panel-body"><input class="form-control" type="email"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="panel panel-default">
+              <div class="panel-heading">URL:</div>
+              <div class="panel-body"><input class="form-control" type="url"></div>
             </div>
           </td>
         </tr>

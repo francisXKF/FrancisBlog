@@ -17,6 +17,14 @@
         <tr>
           <td>
             <div class="panel panel-default">
+              <div class="panel-heading">分类:</div>
+              <div class="panel-body"><input class="form-control" type="text"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="panel panel-default">
               <div class="panel-heading">标签:</div>
               <div class="panel-body"><input class="form-control" type="text"></div>
               <div class="panel-body">
@@ -37,6 +45,27 @@
               <div class="panel-heading">内容:</div>
               <div class="panel-body">
                 <textarea class="editor" placeholder="这里输入内容" data-autosave="editor-content" autofocus required></textarea>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="panel panel-default">
+              <div class="panel-heading">权限:</div>
+              <div class="panel-body">
+                <label class="radio-inline">
+                  <input type="radio" name="showOrHide" id="optionsRadios1" value="option1" checked>
+                  显示
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="showOrHide" id="optionsRadios2" value="option2">
+                  隐藏
+                </label>
+                <br>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="allowComments" value="option1" checked>允许评论
+                </label>
               </div>
             </div>
           </td>
