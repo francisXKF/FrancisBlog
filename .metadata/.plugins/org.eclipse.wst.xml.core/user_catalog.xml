@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"/>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <system systemId="http://www.springframework.org/schema/aop" uri="file:///E:/SSH_马士兵/spring-framework-4.2.5.RELEASE-dist/spring-framework-4.2.5.RELEASE/schema/aop/spring-aop-4.2.xsd"/>
+</catalog>

@@ -1,5 +1,8 @@
 package com.francis.blog.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
@@ -10,13 +13,21 @@ import com.francis.blog.service.UserManager;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import net.sf.json.JSONObject;
+
 @Component("user")
 @Scope("prototype")
 public class UserAction extends ActionSupport{
 	private String name;
 	private String email;
 	private String linkURL;
-	private String password; 
+	private String password;
+	private String result;
+	
+	public String getResult() {
+		return result;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -49,19 +60,18 @@ public class UserAction extends ActionSupport{
 		this.password = password;
 	}
 
-	private UserManager UserManager;
+	private UserManager userManager;
 	
 	public UserManager getUserManager() {
-		return UserManager;
+		return userManager;
 	}
 
 	@Resource
 	public void setUserManager(UserManager userManager) {
-		UserManager = userManager;
+		this.userManager = userManager;
 	}
 
-	@Override
-	public String execute() throws Exception {
+	public String insert() throws Exception {
 		System.out.println(name);
 		User user = new User();
 		user.setName(name);
@@ -69,10 +79,23 @@ public class UserAction extends ActionSupport{
 		user.setLinkURL(linkURL);
 		user.setPassword(password);
 		System.out.println(user.getName());
-		if(UserManager.insert(user) == true)
+		Map<String, String> map = new HashMap<String, String>();
+		if(userManager.insert(user) == true){
+			System.out.println("action again ok");
+			map.put("status", "success");
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			this.result = jsonObject.toString();
 			return SUCCESS;
+		}
+		map.put("status", "failed");
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		this.result = jsonObject.toString();
 		return ERROR;
 	}
-
 	
+	@Override
+	public String execute() throws Exception {
+		System.out.println("execute");
+		return SUCCESS;
+	}
 }

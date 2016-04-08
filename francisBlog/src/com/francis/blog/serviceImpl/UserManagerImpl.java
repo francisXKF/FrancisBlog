@@ -13,7 +13,6 @@ import com.francis.blog.service.UserManager;
 @Component("userManager")
 public class UserManagerImpl implements UserManager{
 	private UserDao userDao;
-	
 	public UserDao getUserDao() {
 		return userDao;
 	}

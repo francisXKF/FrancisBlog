@@ -1,25 +1,30 @@
 package com.francis.blog.pojo;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Article {
 	private Integer id;
 	private String title;
-	private Integer author_id;
+	private User user;
 	private Timestamp post_date;
-	private Integer articletype_id;
+	private ArticleType articleType;
 	private String content;
-	private String tags_id;  //int [] translate to string
+	private Set<TagsType> tagsType;  //int [] translate to string
 	private Integer state;  //article show or hide
 	private Integer allow_comments;  //0 allowed 1 not 
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return id;
 	}
@@ -32,11 +37,13 @@ public class Article {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Integer getAuthor_id() {
-		return author_id;
+	
+	@ManyToOne
+	public User getUser() {
+		return user;
 	}
-	public void setAuthor_id(Integer author_id) {
-		this.author_id = author_id;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Timestamp getPost_date() {
 		return post_date;
@@ -44,11 +51,13 @@ public class Article {
 	public void setPost_date(Timestamp post_date) {
 		this.post_date = post_date;
 	}
-	public Integer getArticletype_id() {
-		return articletype_id;
+	
+	@OneToOne
+	public ArticleType getArticleType() {
+		return articleType;
 	}
-	public void setArticletype_id(Integer articletype_id) {
-		this.articletype_id = articletype_id;
+	public void setArticleType(ArticleType articleType) {
+		this.articleType = articleType;
 	}
 	public String getContent() {
 		return content;
@@ -56,11 +65,12 @@ public class Article {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getTags_id() {
-		return tags_id;
+	@OneToMany
+	public Set<TagsType> getTagsType() {
+		return tagsType;
 	}
-	public void setTags_id(String tags_id) {
-		this.tags_id = tags_id;
+	public void setTagsType(Set<TagsType> tagsType) {
+		this.tagsType = tagsType;
 	}
 	public Integer getState() {
 		return state;

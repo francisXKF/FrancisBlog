@@ -1,0 +1,13 @@
+package com.francis.blog.service;
+
+import java.util.List;
+
+import com.francis.blog.pojo.Article;
+
+public class ArticleManager {
+	public List<Article> query(Article article);
+	public boolean update(Article article);
+	public boolean delete(Article article);
+	public boolean insert(Article article);
+
+}

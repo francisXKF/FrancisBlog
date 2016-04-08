@@ -5,23 +5,35 @@ $(document).ready(function(){
 });
 
 function login(){
-  $("#loginSubmit").click(function(){
+  $("#loginSubmit").unbind('click').click(function(){
     $.ajax({
       url: "user.action",
       data: {
-        name: "francis234",
+        name: "francis23",
         password: "1234562",
         email: "123",
         linkURL: "qwe",
       },
       type: "post",
-//      datatype: "json",
-      success: function(data){
-//        $("#testcontent").load("/francisBlog/jsp/index.jsp");
-        $("#testcontent").html('<%@include page="/index.html" %>');
+      datatype: "json",
+      success: function(txtData){
+        alert("yes");
+        var data = $.parseJSON(txtData);
+//        alert(result);
+        if(data.status=="success"){
+          alert("ok");
+          $('#loginSubmit').val("已登录");
+          alert("oo");
+        }
+        else if(data.status=="failed"){
+          $("#testcontent").html('<%@include page="/html/_404.html" %>');
+        }
+        else{
+          alert(data);
+        }
       },
-      error: function(data){
-        alert("error" + data.username);
+      error: function(txtData){
+        alert("error");
       }
     });
   });
@@ -101,6 +113,7 @@ function articleOp(){
     $('#main').load("_article_add.jsp", function(responseTxt, statusTxt, xhr){
       if(statusTxt=="success"){
         editorAdd();
+        articleAdd();
       }
       if(statusTxt=="error"){
         alert("无法写新文章...");
@@ -146,6 +159,41 @@ function articleDetail(){
       }
       if(statusTxt=="error"){
         $('#main').load("../html/_404.html");
+      }
+    });
+  });
+}
+
+function articleAdd(){
+  $('#addArticleSubmit').unbind('click').click(function(){
+    $.ajax({
+      url: "article.action",
+      data: {
+        "article.title": $('#addArticleTitle').val(),
+        "article.articleType": $('#addArticleType').val(),
+        "article.content": $('#addArticleContent').val(),
+        "article.tagsType": $('#addArticleTagsType').val(),
+        "article.state": $('input[name="showOrHide"]:checked').val(),
+        "article.allow_comments": $('inpout[name="articleComment"]').val()
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        alert("yes");
+        var data = $.parseJSON(txtData);
+//        alert(result);
+        if(data.status=="success"){
+          alert("ok");
+        }
+        else if(data.status=="failed"){
+          $("#testcontent").html('<%@include page="/html/_404.html" %>');
+        }
+        else{
+          alert(data);
+        }
+      },
+      error: function(txtData){
+        alert("error");
       }
     });
   });

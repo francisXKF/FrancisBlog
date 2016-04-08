@@ -12,5 +12,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts2"/>
+	<classpathentry kind="lib" path="E:/SSH_马士兵/aspectj-1.8.9.jar"/>
+	<classpathentry kind="lib" path="E:/SSH_马士兵/aopalliance/aopalliance.jar"/>
+	<classpathentry kind="lib" path="E:/SSH_马士兵/aspectjweaver-1.6.12.jar"/>
+	<classpathentry kind="lib" path="E:/SSH_马士兵/struts-2.3.28-all/struts-2.3.28/lib/struts2-json-plugin-2.3.28.jar"/>
+	<classpathentry kind="lib" path="E:/SSH_马士兵/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

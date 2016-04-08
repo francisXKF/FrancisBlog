@@ -4,10 +4,16 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	<package name="/" extends="struts-default">
-		<action name="user" class="user">
-			<result name="success">/jsp/index.jsp</result>
-			<result name="error">/jsp/index.jsp</result>
+	<package name="/" extends="json-default">
+		<action name="user" class="user" method="insert">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="article" class="article" method="insert">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
 		</action>
 	</package>
 </struts>

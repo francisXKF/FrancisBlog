@@ -14,7 +14,7 @@
     http://www.springframework.org/schema/cache  
     http://www.springframework.org/schema/cache/spring-cache-4.2.xsd  
     http://www.springframework.org/schema/aop  
-    http://www.springframework.org/schema/aop/spring-aop.xsd  
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd  
     http://www.springframework.org/schema/util  
     http://www.springframework.org/schema/util/spring-util.xsd">  
   
@@ -39,9 +39,7 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 	
-	
-
-	<bean id="sf" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		 <property name="packagesToScan">
 			<list>
@@ -51,31 +49,39 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQLDialect
+					org.hibernate.dialect.MySQL5Dialect	
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 	</bean>
 	
+	<aop:aspectj-autoproxy/>
 	<!-- 
+	unused
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sf"></property>
+	</bean>
+	 -->
 	<bean id="txManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sf" />
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<aop:config>
 		<aop:pointcut id="bussinessService"
-			expression="execution(public * com.bjsxt.registration.service.*.*(..))" />
+			expression="execution(public * com.francis.blog.service.*.*(..))" />
 		<aop:advisor pointcut-ref="bussinessService"
 			advice-ref="txAdvice" />
 	</aop:config>
 
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
-			<tx:method name="exists" read-only="true" />
-			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="*" propagation="REQUIRED"/>
 		</tx:attributes>
 	</tx:advice>
+<!-- 
+nh2u9psbd7ixn9iw 
+nh2u9psbd7ixn9iw 
 	 -->
 </beans>
