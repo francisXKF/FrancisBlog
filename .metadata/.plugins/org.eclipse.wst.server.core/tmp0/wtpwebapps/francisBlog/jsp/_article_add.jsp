@@ -64,7 +64,7 @@
                 </label>
                 <br>
                 <label class="checkbox-inline" id="addArticleComments">
-                  <input type="checkbox" id="allowComments" value="articleComment" checked>允许评论
+                  <input type="checkbox" name="articleComment" id="allowComments" value="articleComment" checked>允许评论
                 </label>
               </div>
             </div>

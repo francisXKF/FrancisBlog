@@ -1,3 +1,4 @@
+<%@page import="com.francis.blog.pojo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,7 +28,12 @@
       </div>
       <div class="fs-top">
         <div class="fs-top-user fs-float-left">
-          莫显乎微
+          <%
+          	User login_user = (User)request.getSession().getAttribute("login_user");
+          	if(login_user != null){
+          		out.print(login_user.getName());
+          	}
+          %>
         </div>
       </div>
       <div class="container-fluid">

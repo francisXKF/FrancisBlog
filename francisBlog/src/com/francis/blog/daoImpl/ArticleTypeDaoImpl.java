@@ -34,7 +34,7 @@ public class ArticleTypeDaoImpl implements ArticleTypeDao{
 
 	@Override
 	public ArticleType queryByName(String name) {
-		String sqlString = "from articletype where name=?";
+		String sqlString = "from ArticleType where name=?";
 		List<ArticleType> articleTypes = currentSession().createQuery(sqlString)
 										.setParameter(0, name).list();
 		if(articleTypes.isEmpty()){

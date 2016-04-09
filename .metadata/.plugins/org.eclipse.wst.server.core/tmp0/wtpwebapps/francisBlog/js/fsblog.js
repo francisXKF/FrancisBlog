@@ -5,28 +5,23 @@ $(document).ready(function(){
 });
 
 function login(){
-  $("#loginSubmit").unbind('click').click(function(){
+  $('#loginSubmit').unbind('click').click(function(){
     $.ajax({
-      url: "user.action",
+      url: "user_login.action",
       data: {
-        name: "francis23",
-        password: "1234562",
-        email: "123",
-        linkURL: "qwe",
+        name: $('#loginUserName').val(),
+        password: $('#loginUserPassword').val(),
       },
       type: "post",
       datatype: "json",
       success: function(txtData){
-        alert("yes");
         var data = $.parseJSON(txtData);
-//        alert(result);
         if(data.status=="success"){
-          alert("ok");
           $('#loginSubmit').val("已登录");
-          alert("oo");
+          location.href="/francisBlog/jsp/index.jsp";
         }
         else if(data.status=="failed"){
-          $("#testcontent").html('<%@include page="/html/_404.html" %>');
+          alert("用户？有么？");
         }
         else{
           alert(data);
@@ -166,15 +161,20 @@ function articleDetail(){
 
 function articleAdd(){
   $('#addArticleSubmit').unbind('click').click(function(){
+    var allowComments = 0;
+    alert($('#addArticleTagsType').val());
+    if($('#allowComments').is(":checked") == true){
+      allowComments = 1;
+    }
     $.ajax({
-      url: "article.action",
+      url: "article_insert.action",
       data: {
-        "article.title": $('#addArticleTitle').val(),
-        "article.articleType": $('#addArticleType').val(),
-        "article.content": $('#addArticleContent').val(),
-        "article.tagsType": $('#addArticleTagsType').val(),
-        "article.state": $('input[name="showOrHide"]:checked').val(),
-        "article.allow_comments": $('inpout[name="articleComment"]').val()
+        title: $('#addArticleTitle').val(),
+        article_type_name: $('#addArticleType').val(),
+        content: $('#addArticleContent').val(),
+        tags_typeString: $('#addArticleTagsType').val(),
+        state: $('input[name="showOrHide"]:checked').val(),
+        allow_comments: allowComments
       },
       type: "post",
       datatype: "json",
@@ -184,6 +184,15 @@ function articleAdd(){
 //        alert(result);
         if(data.status=="success"){
           alert("ok");
+          alert(data.selfsession.login_user.name);
+          $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
+            if(statusTxt=="success"){
+              articleDetail();
+            }
+            if(statusTxt=="error"){
+              $('#main').load("../html/_404.html");
+            }
+          });
         }
         else if(data.status=="failed"){
           $("#testcontent").html('<%@include page="/html/_404.html" %>');

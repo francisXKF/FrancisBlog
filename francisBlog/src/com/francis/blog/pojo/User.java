@@ -1,9 +1,12 @@
 package com.francis.blog.pojo;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -13,6 +16,7 @@ public class User {
 	private String linkURL;
 	private String password;  // /login can use password
 	private Integer Identity; //0 tourist 1 user 2 ? 4 admin
+	private Set<Article> article;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -51,5 +55,12 @@ public class User {
 	}
 	public void setIdentity(Integer identity) {
 		Identity = identity;
+	}
+	@OneToMany(mappedBy="user")
+	public Set<Article> getArticle() {
+		return article;
+	}
+	public void setArticle(Set<Article> article) {
+		this.article = article;
 	}
 }

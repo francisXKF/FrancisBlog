@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +26,8 @@ public class UserAction extends ActionSupport{
 	private String linkURL;
 	private String password;
 	private String result;
+	
+	private User user;
 	
 	public String getResult() {
 		return result;
@@ -72,16 +77,13 @@ public class UserAction extends ActionSupport{
 	}
 
 	public String insert() throws Exception {
-		System.out.println(name);
-		User user = new User();
+		user = new User();
 		user.setName(name);
 		user.setEmail(email);
 		user.setLinkURL(linkURL);
 		user.setPassword(password);
-		System.out.println(user.getName());
 		Map<String, String> map = new HashMap<String, String>();
 		if(userManager.insert(user) == true){
-			System.out.println("action again ok");
 			map.put("status", "success");
 			JSONObject jsonObject = JSONObject.fromObject(map);
 			this.result = jsonObject.toString();
@@ -91,6 +93,27 @@ public class UserAction extends ActionSupport{
 		JSONObject jsonObject = JSONObject.fromObject(map);
 		this.result = jsonObject.toString();
 		return ERROR;
+	}
+	
+	public String login() throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		user = new User();
+		user.setName(name);
+		user.setPassword(password);
+		User login_user = userManager.exist(user);
+		if(login_user == null){
+			map.put("status", "failed");
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			this.result = jsonObject.toString();
+			return SUCCESS;  //无论是否存在，传递status，交由ajax来处理
+		}
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		session.setAttribute("login_user", login_user);
+//		map.put("selfsession", session);
+		map.put("status", "success");
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		this.result = jsonObject.toString();
+		return SUCCESS;
 	}
 	
 	@Override

@@ -5,12 +5,7 @@
 
 <struts>
 	<package name="/" extends="json-default">
-		<action name="user" class="user" method="insert">
-			<result type="json">
-				<param name="root">result</param>
-			</result>
-		</action>
-		<action name="article" class="article" method="insert">
+		<action name="*_*" class="{1}" method="{2}">
 			<result type="json">
 				<param name="root">result</param>
 			</result>

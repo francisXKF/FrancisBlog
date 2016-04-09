@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 import com.francis.blog.dao.ArticleDao;
 import com.francis.blog.dao.ArticleTypeDao;
 import com.francis.blog.dao.TagsTypeDao;
+import com.francis.blog.dao.UserDao;
 import com.francis.blog.pojo.Article;
+import com.francis.blog.pojo.ArticleType;
 import com.francis.blog.pojo.TagsType;
 import com.francis.blog.service.ArticleManager;
 
@@ -20,6 +22,7 @@ public class ArticleManagerImpl implements ArticleManager{
 	private ArticleDao articleDao;
 	private ArticleTypeDao articleTypeDao;
 	private TagsTypeDao tagsTypeDao;
+	private UserDao userDao;
 	
 	@Resource
 	public void setArticleDao(ArticleDao articleDao) {
@@ -32,6 +35,10 @@ public class ArticleManagerImpl implements ArticleManager{
 	@Resource
 	public void setTagsTypeDao(TagsTypeDao tagsTypeDao) {
 		this.tagsTypeDao = tagsTypeDao;
+	}
+	@Resource
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 	
 	@Override
@@ -54,10 +61,16 @@ public class ArticleManagerImpl implements ArticleManager{
 
 	@Override
 	public boolean insert(Article article) {
-		articleDao.insert(article);
+		if(userDao.queryByName(article.getUser().getName()) == null){
+			return false;
+		}
+		else{  //如果有session这个可以删除
+			article.setUser(userDao.queryByName(article.getUser().getName()));
+		}
 		if(articleTypeDao.queryByName(article.getArticleType().getName()) == null){
 			articleTypeDao.insert(article.getArticleType());
 		}
+
 		Set<TagsType> tagsTypes = article.getTagsType();
 		TagsType tagsType;
 		Iterator<TagsType> it = tagsTypes.iterator();
@@ -67,6 +80,7 @@ public class ArticleManagerImpl implements ArticleManager{
 				tagsTypeDao.insert(tagsType);
 			}
 		}
+		articleDao.insert(article);
 		return true;
 	}
 

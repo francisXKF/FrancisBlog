@@ -28,7 +28,7 @@ public class TagsTypeDaoImpl implements TagsTypeDao{
 	
 	@Override
 	public TagsType queryByName(String name) {
-		String sqlString = "from tagstype where name=?";
+		String sqlString = "from TagsType where name=?";
 		List<TagsType> tagsTypes = currentSession().createQuery(sqlString)
 									.setParameter(0, name).list();
 		if(tagsTypes.isEmpty()){

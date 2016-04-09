@@ -36,13 +36,13 @@
                 <span class="input-group-addon" id="basic-addon1">
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 </span>
-                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                <input type="text" class="form-control" id="loginUserName" placeholder="Username" aria-describedby="basic-addon1">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
                   <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
                 </span>
-                <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                <input type="password" class="form-control" id="loginUserPassword" placeholder="Password" aria-describedby="basic-addon1">
               </div>
               <input class="btn btn-primary pull-left" type="button" id="loginSubmit" value="登录">
               <input class="btn btn-default pull-right" type="reset" value="Reset">
