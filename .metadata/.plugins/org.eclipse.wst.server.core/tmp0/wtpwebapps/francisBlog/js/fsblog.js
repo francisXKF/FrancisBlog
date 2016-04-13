@@ -51,16 +51,6 @@ function editorAdd(){
       } : false
     });
   }); 
-//    editor = new Simditor({
-//      textarea: $('.editor'),
-//      placeholder: '这里输入文字...',
-//      toolbar: toolbar,
-//      pasteImage: true,
-////      defaultImage: 'assets/images/image.png',
-//      upload: location.search === '?upload' ? {
-//        url: '/upload'
-//      } : false
-//    });
   $preview = $('#preview');
   if ($preview.length > 0) {
     return editor.on('valuechanged', function(e) {
@@ -82,6 +72,7 @@ function categoryOp(){
 function articleOp(){
   $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
     if(statusTxt=="success"){
+      articleList();
       articleDetail();
     }
     if(statusTxt=="error"){
@@ -94,6 +85,7 @@ function articleOp(){
     $('#listArticleLi').addClass("active");
     $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
       if(statusTxt=="success"){
+        articleList();
         articleDetail();
       }
       if(statusTxt=="error"){
@@ -162,7 +154,6 @@ function articleDetail(){
 function articleAdd(){
   $('#addArticleSubmit').unbind('click').click(function(){
     var allowComments = 0;
-    alert($('#addArticleTagsType').val());
     if($('#allowComments').is(":checked") == true){
       allowComments = 1;
     }
@@ -179,14 +170,13 @@ function articleAdd(){
       type: "post",
       datatype: "json",
       success: function(txtData){
-        alert("yes");
         var data = $.parseJSON(txtData);
-//        alert(result);
         if(data.status=="success"){
-          alert("ok");
-          alert(data.selfsession.login_user.name);
           $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
             if(statusTxt=="success"){
+              $('.fs-article-bar').removeClass("active");
+              $('#listArticleLi').addClass("active");
+              articleList();
               articleDetail();
             }
             if(statusTxt=="error"){
@@ -195,15 +185,55 @@ function articleAdd(){
           });
         }
         else if(data.status=="failed"){
-          $("#testcontent").html('<%@include page="/html/_404.html" %>');
+          $("#main").html('<%@include page="/html/_404.html" %>');
         }
         else{
-          alert(data);
+          alert("什么？已添加到数据库，返回出错了？");
         }
       },
       error: function(txtData){
-        alert("error");
+        alert("啊哦，添加失败了");
       }
     });
+  });
+}
+
+function articleList(){
+  $.ajax({
+    url: "article_query.action",
+    data: {
+      article_type_name: "%",
+      tags_typeString: "%"
+    },
+    type: "post",
+    datatype: "json",
+    success : function(txtData){
+      var data = $.parseJSON(txtData);
+      $(data).each(function(i){
+        var article = data[i];
+        $('#listMain').append(
+          '<div class="panel panel-default">'+
+            '<div class="panel-heading">'+
+              '<h3 class="panel-title"><a href="#" class="text-primary fs-article-title" id="articleListTitle">'+article.title+'</a></h3>'+
+              '<div class="fs-article-meta">'+
+                '<a href="#" id="articleListAuthor">'+article.user+'</a>发表于<span id="articleListPostTime">'+article.post_date+'</span> |'+
+                  '分类：<a href="#" id="articleListArticleType">'+article.articleType+'</a> | <a href="#">评论</a>'+
+              '</div>'+
+            '</div>'+
+            '<div class="panel-body" id="articleListContent">'+article.content+
+            '</div>'+
+          '</div>'
+        )
+        
+      });
+//      var article_list = data.articleList;
+//      alert(article_list);
+//      $.each(article_list, function(i, item){
+//        alert(item.title);
+//      });
+    },
+    error: function(txtData){
+        alert("啊哦，文章列表拿不到了");
+      }
   });
 }

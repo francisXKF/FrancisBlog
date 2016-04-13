@@ -29,8 +29,13 @@ public class ArticleDaoImpl implements ArticleDao{
 
 	@Override
 	public List<Article> query(Article article) {
-		// TODO Auto-generated method stub
-		return null;
+		String sqlString = "from Article art "
+//							+"left join TagsType tagstype "
+							+"where art.articleType.name like ? order by post_date desc";
+		List<Article> articleList = currentSession().createQuery(sqlString)
+								.setParameter(0, article.getArticleType().getName())
+								.list();
+		return articleList;
 	}
 
 	@Override

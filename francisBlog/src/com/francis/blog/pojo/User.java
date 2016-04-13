@@ -3,6 +3,7 @@ package com.francis.blog.pojo;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,8 @@ public class User {
 	public void setIdentity(Integer identity) {
 		Identity = identity;
 	}
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user",
+			fetch= FetchType.LAZY)
 	public Set<Article> getArticle() {
 		return article;
 	}

@@ -1,5 +1,6 @@
 package com.francis.blog.serviceImpl;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -43,8 +44,7 @@ public class ArticleManagerImpl implements ArticleManager{
 	
 	@Override
 	public List<Article> query(Article article) {
-		// TODO Auto-generated method stub
-		return null;
+		return articleDao.query(article);
 	}
 
 	@Override
@@ -70,8 +70,9 @@ public class ArticleManagerImpl implements ArticleManager{
 		if(articleTypeDao.queryByName(article.getArticleType().getName()) == null){
 			articleTypeDao.insert(article.getArticleType());
 		}
-
+		article.setArticleType(articleTypeDao.queryByName(article.getArticleType().getName()));
 		Set<TagsType> tagsTypes = article.getTagsType();
+		Set<TagsType> tagsTypesQueryed = new HashSet<TagsType>();
 		TagsType tagsType;
 		Iterator<TagsType> it = tagsTypes.iterator();
 		while(it.hasNext()){
@@ -79,7 +80,9 @@ public class ArticleManagerImpl implements ArticleManager{
 			if(tagsTypeDao.queryByName(tagsType.getName()) == null){
 				tagsTypeDao.insert(tagsType);
 			}
+			tagsTypesQueryed.add(tagsTypeDao.queryByName(tagsType.getName()));
 		}
+		article.setTagsType(tagsTypesQueryed);
 		articleDao.insert(article);
 		return true;
 	}
