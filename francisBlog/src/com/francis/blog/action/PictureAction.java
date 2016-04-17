@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.HashMap;
 
 import net.sf.json.JSONObject;
@@ -54,7 +55,8 @@ public class PictureAction extends ActionSupport{
 		String rootPath = ServletActionContext.getRequest().getRealPath("/upload");
 		InputStream inputStream = new FileInputStream(file);
 		File destFile = new File(rootPath, fileFileName);
-//		File destFile = new File("E:/毕业设计/FrancisBlogProject/francisBlog/WebContent/upload");
+		
+//		File destFile = new File("E:/PictureUpload", fileFileName);
 		OutputStream outputStream = new FileOutputStream(destFile);
 		byte[] buffer = new byte[400];
 		int length = 0;

@@ -15,7 +15,6 @@ import com.francis.blog.pojo.Article;
 @Component("articleDao")
 @Scope("prototype")
 public class ArticleDaoImpl implements ArticleDao{
-
 	private SessionFactory sessionFactory;
 	
 	@Resource
@@ -29,13 +28,22 @@ public class ArticleDaoImpl implements ArticleDao{
 
 	@Override
 	public List<Article> query(Article article) {
-		String sqlString = "from Article art "
-//							+"left join TagsType tagstype "
-							+"where art.articleType.name like ? order by post_date desc";
+		String sqlString = "from Article art where art.articleType.name like ? order by post_date desc";
 		List<Article> articleList = currentSession().createQuery(sqlString)
 								.setParameter(0, article.getArticleType().getName())
 								.list();
 		return articleList;
+	}
+
+	@Override
+	public Article queryById(Integer id) {
+		String sqlString = "from Article art where art.id="+id;
+		List<Article> articleList = currentSession().createQuery(sqlString)
+									.list();
+		if(articleList.isEmpty()){
+			return null;
+		}
+		return articleList.get(0);
 	}
 
 	@Override

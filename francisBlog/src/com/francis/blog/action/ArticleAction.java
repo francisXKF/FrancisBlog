@@ -1,6 +1,7 @@
 package com.francis.blog.action;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,6 +32,7 @@ import com.opensymphony.xwork2.ModelDriven;
 @Component("article")
 @Scope("prototype")
 public class ArticleAction extends ActionSupport{
+	private Integer id;
 	private String title;
 	private String content;
 	private Integer state;
@@ -47,6 +49,13 @@ public class ArticleAction extends ActionSupport{
 	private Set<TagsType> tagsType;
 	private String[] tags_typeList;
 	private User user;
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -213,6 +222,24 @@ public class ArticleAction extends ActionSupport{
 		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);//设置循环策略为忽略    解决json最头疼的问题 死循环
 		jsonConfig.setExcludes(new String[] {"article"});
 		*/
+		
+		/*该方法只能用于list对象*/
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.registerJsonValueProcessor(Article.class, 
+				new ObjectJsonValueProcessor(new GetClassFieldName().getFieldName(article), Article.class));
+		JSONArray jsonArray = JSONArray.fromObject(articleList, jsonConfig);
+//		JSONObject jsonObject = JSONObject.fromObject(map);
+		this.result = jsonArray.toString();
+		return SUCCESS;
+	}
+	
+	public String queryById() throws Exception{
+		System.out.println(id);
+		System.out.println("enter action");
+		article = articleManager.queryById(id);
+		System.out.println("query ok");
+		List<Article> articleList = new ArrayList<Article>();
+		articleList.add(article);
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Article.class, 
 				new ObjectJsonValueProcessor(new GetClassFieldName().getFieldName(article), Article.class));

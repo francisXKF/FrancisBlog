@@ -158,6 +158,7 @@ function articleDetail(){
 //    var nowId = $(this).attr('id');
 //    alert(nowId);
 //    alert($(this).html());
+    var id = $(this).attr("id");
     $('#main').load("_article_detail.jsp", function(responseTxt, statusTxt, xhr){
       if(statusTxt=="success"){
         $('.fs-comments').load("_comment.jsp", function(responseTxt, statusTxt, xhr){
@@ -166,6 +167,22 @@ function articleDetail(){
             $('#commentsReply').load("_article_reply.jsp", function(responseTxt, statusTxt, xhr){
               if(statusTxt=="error"){
                 $('#commentsReply').load("../html/_404.html");
+              }
+            });
+            $.ajax({
+              url: "article_queryById.action",
+              data: {
+                id: id,
+              },
+              type: "post",
+              datatype: "json",
+              success: function(txtData){
+                var data = $.parseJSON(txtData);
+                var article = data[0];
+                $('.fs-article-title').html(article.title);
+                $('.fs-article-info').html('<a href="#" name='+article.user+'>'+article.user+'</a>'+
+                            '发表于'+article.post_data+' | 分类：<a href="#">'+article.articleType+'</a> | <a href="#">评论</a>');
+                $('.fs-article-content').html(article.content);
               }
             });
           }
@@ -244,23 +261,20 @@ function articleList(){
         $('#listMain').append(
           '<div class="panel panel-default">'+
             '<div class="panel-heading">'+
-              '<h3 class="panel-title"><a href="#" class="text-primary fs-article-title" id="articleListTitle">'+article.title+'</a></h3>'+
+              '<h3 class="panel-title"><a href="#" class="text-primary fs-article-title" id="'+article.id+'">'+article.title+'</a></h3>'+
               '<div class="fs-article-meta">'+
-                '<a href="#" id="articleListAuthor">'+article.user+'</a>发表于<span id="articleListPostTime">'+article.post_date+'</span> |'+
-                  '分类：<a href="#" id="articleListArticleType">'+article.articleType+'</a> | <a href="#">评论</a>'+
+                '<a href="#" id="art" name="'+article.user+'">'+article.user+
+                    '</a>发表于<span name="'+article.post_date+'">'+article.post_date+'</span> |'+
+                  '分类：<a href="#" name="'+article.articleType+'">'+article.articleType+'</a> | <a href="#">评论</a>'+
               '</div>'+
             '</div>'+
-            '<div class="panel-body" id="articleListContent">'+article.content+
+            '<div class="panel-body">'+article.content+
             '</div>'+
           '</div>'
         )
         
       });
-//      var article_list = data.articleList;
-//      alert(article_list);
-//      $.each(article_list, function(i, item){
-//        alert(item.title);
-//      });
+      articleDetail();
     },
     error: function(txtData){
         alert("啊哦，文章列表拿不到了");

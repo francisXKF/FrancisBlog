@@ -48,6 +48,11 @@ public class ArticleManagerImpl implements ArticleManager{
 	}
 
 	@Override
+	public Article queryById(Integer id) {
+		return articleDao.queryById(id);
+	}
+
+	@Override
 	public boolean update(Article article) {
 		// TODO Auto-generated method stub
 		return false;
