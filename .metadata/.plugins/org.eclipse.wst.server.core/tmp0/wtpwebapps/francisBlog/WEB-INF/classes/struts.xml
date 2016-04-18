@@ -9,6 +9,7 @@
 			<result type="json">
 				<param name="root">result</param>
 			</result>
+			<result name="error">/html/_404.html</result>
 		</action>
 	</package>
 </struts>

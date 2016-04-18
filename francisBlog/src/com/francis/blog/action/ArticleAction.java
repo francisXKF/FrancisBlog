@@ -234,8 +234,6 @@ public class ArticleAction extends ActionSupport{
 	}
 	
 	public String queryById() throws Exception{
-		System.out.println(id);
-		System.out.println("enter action");
 		article = articleManager.queryById(id);
 		System.out.println("query ok");
 		List<Article> articleList = new ArrayList<Article>();

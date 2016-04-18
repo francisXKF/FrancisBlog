@@ -1,0 +1,92 @@
+package com.francis.blog.action;
+
+import java.sql.Timestamp;
+
+import javax.annotation.Resource;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import com.francis.blog.service.CommentsManager;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+@Component("comments")
+@Scope("prototype")
+public class CommentsAction extends ActionSupport{
+	private Integer id;
+	private String content;
+	private Integer article_id;
+	private Integer replycomment_id;
+	private Timestamp comment_date;
+	
+	private String username;
+	private String useremail;
+	private String userurl;
+	
+	private CommentsManager commentsManager;
+	
+	@Resource
+	public CommentsManager getCommentsManager() {
+		return commentsManager;
+	}
+	public void setCommentsManager(CommentsManager commentsManager) {
+		this.commentsManager = commentsManager;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getUseremail() {
+		return useremail;
+	}
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
+	}
+	public String getUserurl() {
+		return userurl;
+	}
+	public void setUserurl(String userurl) {
+		this.userurl = userurl;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Integer getArticle_id() {
+		return article_id;
+	}
+	public void setArticle_id(Integer article_id) {
+		this.article_id = article_id;
+	}
+	public Integer getReplycomment_id() {
+		return replycomment_id;
+	}
+	public void setReplycomment_id(Integer replycomment_id) {
+		this.replycomment_id = replycomment_id;
+	}
+	public Timestamp getComment_date() {
+		return comment_date;
+	}
+	public void setComment_date(Timestamp comment_date) {
+		this.comment_date = comment_date;
+	}
+	@Override
+	public String execute() throws Exception {
+		//if(commentsManager.insert(comments))
+		//	return SUCCESS;
+		return ERROR;
+	}
+
+}

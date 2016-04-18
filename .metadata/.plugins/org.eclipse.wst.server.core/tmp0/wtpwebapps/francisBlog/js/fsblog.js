@@ -164,11 +164,7 @@ function articleDetail(){
         $('.fs-comments').load("_comment.jsp", function(responseTxt, statusTxt, xhr){
           if(statusTxt=="success"){
             editorAdd();
-            $('#commentsReply').load("_article_reply.jsp", function(responseTxt, statusTxt, xhr){
-              if(statusTxt=="error"){
-                $('#commentsReply').load("../html/_404.html");
-              }
-            });
+            
             $.ajax({
               url: "article_queryById.action",
               data: {
@@ -183,6 +179,9 @@ function articleDetail(){
                 $('.fs-article-info').html('<a href="#" name='+article.user+'>'+article.user+'</a>'+
                             '发表于'+article.post_data+' | 分类：<a href="#">'+article.articleType+'</a> | <a href="#">评论</a>');
                 $('.fs-article-content').html(article.content);
+                
+                articleReplyLoad(article.id);
+                commentAddClick(article.id);
               }
             });
           }
@@ -279,5 +278,96 @@ function articleList(){
     error: function(txtData){
         alert("啊哦，文章列表拿不到了");
       }
+  });
+}
+
+function commentAddClick(article_id){
+  $('#commentMain').unbind('click').click(function(){
+    commentAdd(article_id, 0);
+  }),
+  $('.fs-reply-btn').unbind('click').click(function(){
+    var replycomment_id = $(this).attr("id");
+    commentAdd(article_id, replycomment_id);
+  })
+}
+
+function commentAdd(article_id, replycomment_id){
+  $('#commentSubmit').unbind('click').click(function(){
+    $.ajax({
+      url: "comments_insert.action",
+      data: {
+        article_id : article_id,
+        username: $('input[name="username"]').val(),
+        useremail: $('input[name="userEmail"]').val(),
+        userurl: $('input[name="userUrl"]').val(),
+        replycomment_id: replycomment_id,
+        content: $('.editor').val()
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        var data = $.parseJSON(txtData);
+        alert("ok");
+      },
+      error: function(txtData){
+        alert("Why?怎么不能评论")
+      }
+    })
+  });
+}
+
+function articleReplyLoad(article_id){
+  $('#commentsReply').load("_article_reply.jsp", function(responseTxt, statusTxt, xhr){
+    if(statusTxt=="success"){
+      $.ajax({
+        url: "comments_queryByArticleId.action",
+        data: {
+          article_id: article_id,
+        },
+        type: "post",
+        datatype: "json",
+        success: function(txtData){
+          alert("reply load ok");
+          
+          var listGroupItem = '<li class="list-group-item"><li>';
+          var fsReplyBody = '<div class="fs-reply-bd"></div>';
+          var fsArticleMeta ='<div class="fs-article-meta"></div>';
+          var fsReplyList = '<div class="fs-reply-list"></div>';
+          
+          alert("?" + txtData);
+          var data = $.parseJSON(txtData);
+          alert(data);
+          $(data).each(function(i){
+            alert("enter");
+            var comments = data[i];
+            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a> : <span>'+comments.content+'</span><br>'+
+                            '<div><span class="text-muted">'+comments.comment_date+'</span>'+
+                            '<span class="btn btn-xs glyphicon glyphicon-comment" name="'+comments.id+'"></span></div>';
+            var packageArticleMeta = $(baseInfo).appendTo(fsArticleMeta);
+            if(comments.replycomment_id == 0){
+              var packageReplyBody = $(packageArticleMeta).appendTo(fsReplyBody);
+              var childUl = $('<ul></ul>').attr("id", comments.id);
+              var packageReplyList = $(fsReplyList).append(childUl);
+              var packageListGroupItem = $(listGroupItem).append(packageReplyBody).after(packageReplyList);
+              alert("FU");
+              $(packageListGroupItem).appendTo('#0');
+            }
+            else{
+              var childLi = $('<li></li>').attr("id", comments.id);
+              var packageChildLi = $(packageArticleMeta).appendTo(childLi);
+              alert("ZI");
+              $(packageChildLi).appendTo('#'+comments.replycomment_id+'');
+            }
+          });
+          
+        },
+        error: function(txtData){
+          alert("咦？评论呢？");
+        }
+      });
+    }
+    if(statusTxt=="error"){
+      $('#commentsReply').load("../html/_404.html");
+    }
   });
 }

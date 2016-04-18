@@ -10,7 +10,7 @@
           <td>
             <div class="panel panel-default">
               <div class="panel-heading">Name:</div>
-              <div class="panel-body"><input class="form-control" type="text"></div>
+              <div class="panel-body"><input class="form-control" type="text" name="username"></div>
             </div>
           </td>
         </tr>
@@ -18,7 +18,7 @@
           <td>
             <div class="panel panel-default">
               <div class="panel-heading">Email:</div>
-              <div class="panel-body"><input class="form-control" type="email"></div>
+              <div class="panel-body"><input class="form-control" type="email" name="usreEmail"></div>
             </div>
           </td>
         </tr>
@@ -26,7 +26,7 @@
           <td>
             <div class="panel panel-default">
               <div class="panel-heading">URL:</div>
-              <div class="panel-body"><input class="form-control" type="url"></div>
+              <div class="panel-body"><input class="form-control" type="url" name="userUrl"></div>
             </div>
           </td>
         </tr>
@@ -42,7 +42,7 @@
         </tr>
       </table>
       <div>
-        <input class="btn btn-info" type="button" value="提交">
+        <input class="btn btn-info" type="button" id="commentSubmit"value="提交">
         <input class="btn btn-default pull-right" type="button" value="取消">
       </div>
     </div>
