@@ -5,8 +5,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">新评论:</div>
     <div class="panel-body">
-      <table class="table table-striped">
-        <tr>
+      <table class="table table-striped" id="commentNewReply">
+        <!--<tr>
           <td>
             <div class="fs-article-meta">
               <a href="#">WhatElse</a> : <span>评论了你的文章</span> : 
@@ -71,7 +71,7 @@
               </div>
             </div>
           </td>
-        </tr>
+        </tr>-->
       </table>
     </div>
   </div>

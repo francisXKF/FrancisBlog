@@ -25,7 +25,7 @@
     </div>
   </div>
   <a href="#" class="btn btn-primary pull-left">修改</a>
-  <a href="#commentMain" class="btn btn-info pull-right">评论</a><br>
+  <a href="#commentMain" class="btn btn-info pull-right fs-comment">评论</a><br>
   <hr>
   <div id="commentsReply">
     <!--  回复历史信息  -->

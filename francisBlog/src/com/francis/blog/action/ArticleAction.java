@@ -235,7 +235,6 @@ public class ArticleAction extends ActionSupport{
 	
 	public String queryById() throws Exception{
 		article = articleManager.queryById(id);
-		System.out.println("query ok");
 		List<Article> articleList = new ArrayList<Article>();
 		articleList.add(article);
 		JsonConfig jsonConfig = new JsonConfig();

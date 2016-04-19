@@ -47,7 +47,6 @@ public class UserManagerImpl implements UserManager{
 
 	@Override
 	public boolean insert(User user) {
-		System.out.println(userDao==null);
 		return userDao.insert(user);
 	}
 }

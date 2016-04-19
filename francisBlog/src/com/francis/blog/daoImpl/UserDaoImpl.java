@@ -77,11 +77,8 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public boolean insert(User user) {
-		// TODO Auto-generated method stub
-		System.out.println("enter");
 //		this.hibernateTemplate.save(user);
 		currentSession().save(user);
-		System.out.println("add user ok");
 		return true;
 	}
 

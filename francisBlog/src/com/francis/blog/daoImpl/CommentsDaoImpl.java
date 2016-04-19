@@ -1,6 +1,8 @@
 package com.francis.blog.daoImpl;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -31,6 +33,17 @@ public class CommentsDaoImpl implements CommentsDao{
 							+" order by cmt.comment_date";
 		List<Comments> commentsList = currentSession().createQuery(sqlString).list();
 		return commentsList;
+	}
+	
+	@Override
+	public List<Map<String, Object>> queryByTime(Timestamp timestamp) {
+		String sqlString = "select user.name as username, art.id as article_id, "+
+							"art.title as article_title, cmt.comment_date as comment_date "+
+							"from (Comments cmt left join Article art on cmt.article_id = art.id)"+
+							" left join User user on cmt.user_id = user.id";
+//		System.out.println(sqlString);
+		List<Map<String, Object>> queryList= currentSession().createSQLQuery(sqlString).list();
+		return queryList;
 	}
 
 	@Override

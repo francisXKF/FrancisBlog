@@ -144,6 +144,7 @@ function articleOp(){
     $('#main').load("_article_new_reply.jsp", function(responseTxt, statusTxt, xhr){
       if(statusTxt=="success"){
         $('#replyNewNum').html("");
+        commentNew();
         articleDetail();
       }
       if(statusTxt=="error"){
@@ -164,7 +165,7 @@ function articleDetail(){
         $('.fs-comments').load("_comment.jsp", function(responseTxt, statusTxt, xhr){
           if(statusTxt=="success"){
             editorAdd();
-            
+            $('#commentMain').addClass("fs-hidden");
             $.ajax({
               url: "article_queryById.action",
               data: {
@@ -282,11 +283,15 @@ function articleList(){
 }
 
 function commentAddClick(article_id){
-  $('#commentMain').unbind('click').click(function(){
+  //click the comment btn
+  $('.fs-comment').unbind('click').click(function(){
+    $('#commentMain').removeClass("fs-hidden");
     commentAdd(article_id, 0);
   }),
+  //click the reply comment btn
   $('.fs-reply-btn').unbind('click').click(function(){
-    var replycomment_id = $(this).attr("id");
+    var replycomment_id = $(this).attr("name");
+    $('#commentMain').removeClass("fs-hidden");
     commentAdd(article_id, replycomment_id);
   })
 }
@@ -306,8 +311,12 @@ function commentAdd(article_id, replycomment_id){
       type: "post",
       datatype: "json",
       success: function(txtData){
-        var data = $.parseJSON(txtData);
-        alert("ok");
+        $('input[name="username"]').val("");
+        $('input[name="userEmail"]').val("");
+        $('input[name="userUrl"]').val("");
+        $('.editor').text("");
+        $('#commentMain').addClass("fs-hidden");
+        articleReplyLoad(article_id);
       },
       error: function(txtData){
         alert("Why?怎么不能评论")
@@ -327,7 +336,6 @@ function articleReplyLoad(article_id){
         type: "post",
         datatype: "json",
         success: function(txtData){
-          alert("reply load ok");
           
           var listGroupItem = '<div class="list-group-item"></div>';
           var fsReplyBody = '<div class="fs-reply-bd"></div>';
@@ -336,19 +344,11 @@ function articleReplyLoad(article_id){
           
           var data = $.parseJSON(txtData);
           $(data).each(function(i){
-            alert("enter");
             var comments = data[i];
             var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a>:<span>'+comments.content+'</span><br>'+
                             '<div><span class="text-muted">'+comments.comment_date+'</span>'+
-                            '<span class="btn btn-xs glyphicon glyphicon-comment" name="'+comments.id+'"></span></div>';
-/*            
-            $(listGroupItem).attr("id", "item" + comments.id);
-            $(fsArticleMeta).attr("id", "meta" + comments.id);
-            $(fsReplyBody).attr("id", "body" + comments.id);
-            $(fsReplyList).attr("id", "list" + comments.id);
-            alert(listGroupItem);
-            $(baseInfo).appendTo('#meta' + comments.id);
-*/
+                            '<a href="#commentMain"><span class="btn btn-xs glyphicon glyphicon-comment fs-reply-btn" name="'+comments.id+'">'
+                            +'</span></a></div><hr>';
             if(comments.replycomment_id == 0){
               $(listGroupItem).attr("id", "item" + comments.id).appendTo('#0');
               $(fsReplyBody).attr("id", "body" + comments.id).appendTo('#item' + comments.id);
@@ -356,24 +356,17 @@ function articleReplyLoad(article_id){
               $(baseInfo).appendTo('#meta' + comments.id);  
               $(fsReplyList).attr("id", "list" + comments.id).appendTo('#item' + comments.id);
               $('<ul></ul>').attr("id", "ul" + comments.id).appendTo('#list' + comments.id);
-//              $(fsArticleMeta).appendTo('#body' + comments.id);
-////              alert(packageReplyBody.html());
-//              $(fsReplyBody).appendTo('#item' + comments.id);
-////              alert(head.html());
-//              var childUl = $('<ul></ul>').attr("id", "ul" + comments.id);
-//              alert(childUl.html());
-//              $(childUl).appendTo('#list' + comments.id);
-////              alert("packagereplylist:" + packageReplyList.val());
-//              $(fsReplyList).appendTo('#item' + comments.id);
-//              $(listGroupItem).appendTo('#0');
+
             }
             else{
               $('<li></li>').attr("id", "li" + comments.id).appendTo('#ul'+comments.replycomment_id);
               $(fsArticleMeta).attr("id", "meta" + comments.id).appendTo('#li' + comments.id);
               $(baseInfo).appendTo('#meta' + comments.id);
+              $('<ul></ul>').attr("id", "ul" + comments.id).appendTo('#li' + comments.id);
+
             }
           });
-          
+          commentAddClick(article_id);
         },
         error: function(txtData){
           alert("咦？评论呢？");
@@ -384,4 +377,41 @@ function articleReplyLoad(article_id){
       $('#commentsReply').load("../html/_404.html");
     }
   });
+}
+
+function commentNew(){
+  //alert("select first");
+  //$('#replyNewArticle').unbind('click').click(function(){
+//    alert("select!");
+    $.ajax({
+      url: "comments_queryByTime.action",
+      data: {
+        
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        var data = $.parseJSON(txtData);
+        $(data).each(function(i){
+          var comments = data[i];
+//          alert(comments);
+          $('#commentNewReply').append(
+            '<tr>'+
+              '<td>'+
+                '<div class="fs-article-meta">'+
+                  '<a href="#">'+comments[0]+'</a> : <span>评论了你的文章</span> :'+ 
+                  '<span class="fs-article-title">'+
+                      '<a href="'+comments[1]+'" class="text-primary fs-article-title">'+comments[2]+'</a>'+
+                  '</span>'+
+                  '<div>'+
+                  '<span class="text-muted">'+comments[3]+'</span>'+
+                  '</div>'+
+                '</div>'+
+              '</td>'+
+            '</tr>'
+          );
+        });
+      }
+    });
+  //});
 }

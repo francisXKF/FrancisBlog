@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -126,6 +127,7 @@ public class CommentsAction extends ActionSupport{
 			map.put("status", "success");
 			JSONObject jsonObject = JSONObject.fromObject(map);
 			this.result = jsonObject.toString();
+			System.out.println(comments.getReplycomment_id());
 			return SUCCESS;
 		}
 		return ERROR;
@@ -139,14 +141,19 @@ public class CommentsAction extends ActionSupport{
 		article.setId(article_id);
 		comments.setArticle(article);
 		List<Comments> commentsList = commentsManager.query(comments);
-		System.out.println("the size: "+commentsList.size());
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Comments.class, 
 				new ObjectJsonValueProcessor4Comments(new GetClassFieldName().getFieldName(comments), Comments.class));
 		JSONArray jsonArray = JSONArray.fromObject(commentsList, jsonConfig);
 		this.result = jsonArray.toString();
-		System.out.println(result);
 		return SUCCESS;
 	}
-
+	public String queryByTime() throws Exception{
+		List<Map<String, Object>> commentsList = commentsManager.queryByTime(comment_date);
+		JsonConfig jsonConfig = new JsonConfig();
+		JSONArray jsonArray = JSONArray.fromObject(commentsList, jsonConfig);
+		this.result = jsonArray.toString();
+//		System.out.println(result);
+		return SUCCESS;
+	}
 }

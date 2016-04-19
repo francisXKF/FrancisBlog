@@ -1,6 +1,8 @@
 package com.francis.blog.serviceImpl;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -50,6 +52,11 @@ public class CommentsManagerImpl implements CommentsManager{
 	@Override
 	public List<Comments> query(Comments comments) {
 		return commentsDao.query(comments);
+	}
+
+	@Override
+	public List<Map<String, Object>> queryByTime(Timestamp timestamp) {
+		return commentsDao.queryByTime(timestamp);
 	}
 
 }
