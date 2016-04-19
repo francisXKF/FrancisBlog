@@ -28,7 +28,7 @@ public class CommentsDaoImpl implements CommentsDao{
 	@Override
 	public List<Comments> query(Comments comments) {
 		String sqlString = "from Comments cmt where cmt.article.id="+comments.getArticle().getId()
-							+" order by cmt.comment_date";
+							+" order by cmt.comment_date desc";
 		List<Comments> commentsList = currentSession().createQuery(sqlString).list();
 		return commentsList;
 	}

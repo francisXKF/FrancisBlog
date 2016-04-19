@@ -329,48 +329,44 @@ function articleReplyLoad(article_id){
         success: function(txtData){
           alert("reply load ok");
           
-          var listGroupItem = '<div class="list-group-item"></div>';
+          var listGroupItem = '<li class="list-group-item"><li>';
           var fsReplyBody = '<div class="fs-reply-bd"></div>';
           var fsArticleMeta ='<div class="fs-article-meta"></div>';
           var fsReplyList = '<div class="fs-reply-list"></div>';
           
+          alert("?" + txtData);
           var data = $.parseJSON(txtData);
+          alert(data);
           $(data).each(function(i){
             alert("enter");
             var comments = data[i];
-            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a>:<span>'+comments.content+'</span><br>'+
+            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a> : <span>'+comments.content+'</span><br>'+
                             '<div><span class="text-muted">'+comments.comment_date+'</span>'+
                             '<span class="btn btn-xs glyphicon glyphicon-comment" name="'+comments.id+'"></span></div>';
-/*            
+            
             $(listGroupItem).attr("id", "item" + comments.id);
             $(fsArticleMeta).attr("id", "meta" + comments.id);
             $(fsReplyBody).attr("id", "body" + comments.id);
             $(fsReplyList).attr("id", "list" + comments.id);
-            alert(listGroupItem);
+            
             $(baseInfo).appendTo('#meta' + comments.id);
-*/
             if(comments.replycomment_id == 0){
-              $(listGroupItem).attr("id", "item" + comments.id).appendTo('#0');
-              $(fsReplyBody).attr("id", "body" + comments.id).appendTo('#item' + comments.id);
-              $(fsArticleMeta).attr("id", "meta" + comments.id).appendTo('#body' + comments.id);
-              $(baseInfo).appendTo('#meta' + comments.id);  
-              $(fsReplyList).attr("id", "list" + comments.id).appendTo('#item' + comments.id);
-              $('<ul></ul>').attr("id", "ul" + comments.id).appendTo('#list' + comments.id);
-//              $(fsArticleMeta).appendTo('#body' + comments.id);
-////              alert(packageReplyBody.html());
-//              $(fsReplyBody).appendTo('#item' + comments.id);
-////              alert(head.html());
-//              var childUl = $('<ul></ul>').attr("id", "ul" + comments.id);
-//              alert(childUl.html());
-//              $(childUl).appendTo('#list' + comments.id);
-////              alert("packagereplylist:" + packageReplyList.val());
-//              $(fsReplyList).appendTo('#item' + comments.id);
-//              $(listGroupItem).appendTo('#0');
+              $(fsArticleMeta).appendTo('#body' + comments.id);
+//              alert(packageReplyBody.html());
+              $(fsReplyBody).appendTo('#item' + comments.id);
+//              alert(head.html());
+              var childUl = $('<ul></ul>').attr("id", "ul" + comments.id);
+              alert(childUl.html());
+              $(childUl).appendTo('#list' + comments.id);
+//              alert("packagereplylist:" + packageReplyList.val());
+              $(fsReplyList).appendTo('#item' + comments.id);
+              $(listGroupItem).appendTo('#0');
             }
             else{
-              $('<li></li>').attr("id", "li" + comments.id).appendTo('#ul'+comments.replycomment_id);
-              $(fsArticleMeta).attr("id", "meta" + comments.id).appendTo('#li' + comments.id);
-              $(baseInfo).appendTo('#meta' + comments.id);
+              var childLi = $('<li></li>').attr("id", comments.id);
+              var packageChildLi = $(packageArticleMeta).appendTo(childLi);
+              alert("ZI");
+              $(packageChildLi).appendTo('#'+comments.replycomment_id+'');
             }
           });
           
