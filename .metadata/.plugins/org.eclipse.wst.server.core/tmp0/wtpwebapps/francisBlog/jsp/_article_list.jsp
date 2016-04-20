@@ -29,8 +29,8 @@
 -->
   </div>
   <nav>
-    <ul class="pagination">
-      <li class="disabled">
+    <ul class="pagination" id="pageBar">
+      <!-- <li class="disabled">
         <a href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
@@ -44,7 +44,7 @@
         <a href="#" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
-      </li>
+      </li> -->
     </ul>
   </nav>
 </div>

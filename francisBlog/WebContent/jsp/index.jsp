@@ -43,8 +43,9 @@
               <%@ include file="../html/_search_bar.html" %><br>
             </div>
             <!--   分类    -->
-            <jsp:include page="/jsp/_category.jsp" flush="true" />
-            
+            <div id="categoryPlace">
+            //<jsp:include page="/jsp/_category.jsp" flush="true" />
+            </div>
           </div>
           <div class="fs-span9">
             <ul class="nav nav-tabs">

@@ -1,6 +1,7 @@
 package com.francis.blog.daoImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -27,9 +28,11 @@ public class ArticleTypeDaoImpl implements ArticleTypeDao{
 	}
 
 	@Override
-	public List<ArticleType> query(ArticleType articleType) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, Object>> query(ArticleType articleType) {
+		String sqlString = "select artt.id as ID, artt.name as Name from ArticleType artt";
+		List<Map<String, Object>> articleTypeList = currentSession().createSQLQuery(sqlString)
+													.list();
+		return articleTypeList;
 	}
 
 	@Override

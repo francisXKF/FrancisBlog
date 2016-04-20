@@ -5,7 +5,8 @@ import java.util.List;
 import com.francis.blog.pojo.Article;
 
 public interface ArticleManager {
-	public List<Article> query(Article article);
+	public List<Article> query(Article article, Integer start);
+	public Integer querySize(Article article);
 	public Article queryById(Integer id);
 	public boolean update(Article article);
 	public boolean delete(Article article);

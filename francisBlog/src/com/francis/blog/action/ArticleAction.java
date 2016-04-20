@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ import com.francis.blog.pojo.User;
 import com.francis.blog.service.ArticleManager;
 import com.francis.blog.util.GetClassFieldName;
 import com.francis.blog.util.ObjectJsonValueProcessor;
+import com.francis.blog.util.QueryConstent;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -41,6 +43,8 @@ public class ArticleAction extends ActionSupport{
 	private String article_type_name;
 	private String tags_typeString;
 	
+	private Integer start;
+	private Integer step = QueryConstent.STEP;
 	private Date now_date;
 	private ArticleManager articleManager;
 	private String result;
@@ -95,6 +99,12 @@ public class ArticleAction extends ActionSupport{
 	
 	public ArticleManager getArticleManager() {
 		return articleManager;
+	}
+	public Integer getStart() {
+		return start;
+	}
+	public void setStart(Integer start) {
+		this.start = start;
 	}
 	
 	@Resource
@@ -169,7 +179,11 @@ public class ArticleAction extends ActionSupport{
 		article.setArticleType(articleType);
 		article.setTagsType(tagsType);
 		
-		List<Article> articleList = articleManager.query(article);
+		if(start == null){
+			start = 0;
+		}
+		
+		List<Article> articleList = articleManager.query(article, start * step);
 		map.put("articleList", articleList);
 		map.put("status", "success");
 		/*该方法可能只解决obj的时候，若用list，需要另一种解决。
@@ -243,6 +257,20 @@ public class ArticleAction extends ActionSupport{
 		JSONArray jsonArray = JSONArray.fromObject(articleList, jsonConfig);
 //		JSONObject jsonObject = JSONObject.fromObject(map);
 		this.result = jsonArray.toString();
+		return SUCCESS;
+	}
+	
+	public String querySize() throws Exception{
+		Map<String, String> map = new HashMap<String, String>();
+		article = new Article();
+		articleType = new ArticleType();
+		articleType.setName(article_type_name);
+		article.setArticleType(articleType);
+		int cnt = articleManager.querySize(article);
+		cnt = (cnt / step) + (cnt % step == 0 ? 0 : 1);
+		map.put("cnt", cnt + "");
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		this.result = jsonObject.toString();
 		return SUCCESS;
 	}
 }

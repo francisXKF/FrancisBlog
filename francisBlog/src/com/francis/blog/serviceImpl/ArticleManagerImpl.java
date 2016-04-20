@@ -20,6 +20,7 @@ import com.francis.blog.service.ArticleManager;
 
 @Component("articleManager")
 public class ArticleManagerImpl implements ArticleManager{
+
 	private ArticleDao articleDao;
 	private ArticleTypeDao articleTypeDao;
 	private TagsTypeDao tagsTypeDao;
@@ -43,15 +44,19 @@ public class ArticleManagerImpl implements ArticleManager{
 	}
 	
 	@Override
-	public List<Article> query(Article article) {
-		return articleDao.query(article);
+	public List<Article> query(Article article, Integer start) {
+		return articleDao.query(article, start);
 	}
 
 	@Override
 	public Article queryById(Integer id) {
 		return articleDao.queryById(id);
 	}
-
+	
+	@Override
+	public Integer querySize(Article article) {
+		return articleDao.querySize(article);
+	}
 	@Override
 	public boolean update(Article article) {
 		// TODO Auto-generated method stub

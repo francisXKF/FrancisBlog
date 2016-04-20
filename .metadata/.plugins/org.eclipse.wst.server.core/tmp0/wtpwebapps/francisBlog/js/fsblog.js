@@ -1,3 +1,5 @@
+var startPage = 0;
+var g_articleType = "%";
 $(document).ready(function(){
   login();
   categoryOp();
@@ -90,8 +92,15 @@ function editorAdd(){
 }
 
 function categoryOp(){
+  $('#categoryPlace').load("_category.jsp", function(responseTxt, statusTxt, xhr){
+    if(statusTxt=="success"){
+      articleTypeLoad();
+    }
+    if(statusTxt=="error"){
+      $('#categoryPlace').load("../html/_404.html");
+    }
+  });
   $('#categoryTitleA').unbind('click').click(function(){
-//    $('#categoryTitleA').unbind('click');
     $('.collapse').toggleClass('in');
   });
   $('#categoryTagB').unbind('click').click(function(){
@@ -102,6 +111,7 @@ function categoryOp(){
 function articleOp(){
   $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
     if(statusTxt=="success"){
+      startPage = 0;
       articleList();
       articleDetail();
     }
@@ -111,6 +121,7 @@ function articleOp(){
   });
   
   $('#listArticle').unbind('click').click(function(){
+    startPage = 0;
     $('.fs-article-bar').removeClass("active");
     $('#listArticleLi').addClass("active");
     $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
@@ -223,6 +234,7 @@ function articleAdd(){
             if(statusTxt=="success"){
               $('.fs-article-bar').removeClass("active");
               $('#listArticleLi').addClass("active");
+              startPage = 0;
               articleList();
               articleDetail();
             }
@@ -249,13 +261,15 @@ function articleList(){
   $.ajax({
     url: "article_query.action",
     data: {
-      article_type_name: "%",
-      tags_typeString: "%"
+      article_type_name: g_articleType,
+      tags_typeString: "%",
+      start: startPage
     },
     type: "post",
     datatype: "json",
     success : function(txtData){
       var data = $.parseJSON(txtData);
+      $('#listMain').empty();
       $(data).each(function(i){
         var article = data[i];
         $('#listMain').append(
@@ -275,6 +289,7 @@ function articleList(){
         
       });
       articleDetail();
+      pageBarLoad();
     },
     error: function(txtData){
         alert("啊哦，文章列表拿不到了");
@@ -345,7 +360,7 @@ function articleReplyLoad(article_id){
           var data = $.parseJSON(txtData);
           $(data).each(function(i){
             var comments = data[i];
-            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a>:<span>'+comments.content+'</span><br>'+
+            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a>:<span>'+comments.content+'</span>'+
                             '<div><span class="text-muted">'+comments.comment_date+'</span>'+
                             '<a href="#commentMain"><span class="btn btn-xs glyphicon glyphicon-comment fs-reply-btn" name="'+comments.id+'">'
                             +'</span></a></div><hr>';
@@ -414,4 +429,112 @@ function commentNew(){
       }
     });
   //});
+}
+
+function pageBarLoad(){
+  $.ajax({
+    url: "article_querySize.action",
+    data:{
+      article_type_name: g_articleType,
+      tags_typeString: "%"
+    },
+    type: "post",
+    datatype: "json",
+    success: function(txtData){
+      var data = $.parseJSON(txtData);
+      var cnt = data.cnt;
+      $('#pageBar').empty();
+      $('#pageBar').append('<li id="pageBarLeft">'+
+                    '<a href="#" aria-label="Previous">'+
+                    '<span aria-hidden="true">&laquo;</span>'+
+                    '</a>'+
+                    '</li>');
+      for(i = 0; i < cnt; i++){
+        $('#pageBar').append(
+                  '<li name="pageBarLi'+ i +'"><a href="#"><span>'+
+                  i+'</span></a></li>'
+        );
+      }
+      $('#pageBar').append('<li id="pageBarRight">'+
+                    '<a href="#" aria-label="Next">'+
+                    '<span aria-hidden="true">&raquo;</span>'+
+                    '</a>'+
+                    '</li>'
+      );
+      $('li[name="pageBarLi'+startPage+'"]').addClass("active");
+      if(startPage == 0){
+        $('#pageBarLeft').addClass("disabled");
+      }
+      if(startPage == (cnt-1)){
+        $('#pageBarRight').addClass("disabled");
+      }
+      pageBarClick();
+    },
+    error: function(txtData){
+      alert("页码条呢？。。。");
+    }
+  });
+}
+
+function pageBarClick(){
+  $('#pageBarLeft').unbind('click').click(function(){
+    if($('#pageBarLeft').hasClass("disabled")){
+      //not op
+    }
+    else{
+      startPage = startPage - 1;
+      articleList();
+    }
+  });
+  $('#pageBarRight').unbind('click').click(function(){
+    if($('#pageBarRight').hasClass("disabled")){
+      //not op
+    }
+    else{
+      startPage = startPage + 1;
+      articleList();
+    }
+  });
+  $('li[name*="pageBarLi"]').unbind('click').click(function(){
+    var pageNum = $(this).find('span').text();
+    startPage = pageNum;
+    articleList();
+  });
+}
+
+function articleTypeLoad(){
+  $.ajax({
+    url: "articleType_query.action",
+    data: {},
+    type: "post",
+    datatype: "json",
+    success: function(txtData){
+      var data = $.parseJSON(txtData);
+      $('#articleTypeListShow').empty();
+      $('#articleTypeListShow').append(
+                  '<li role="presentation" class="active" id="articleTypeLi' + 0 +'">'+
+                  '<a href="javascript:void(0)">%</a></li>'
+      );
+      $(data).each(function(i){
+        var articleType = data[i];
+        $('#articleTypeListShow').append(
+                  '<li role="presentation" id="articleTypeLi' + articleType[0] +'">'+
+                  '<a href="javascript:void(0)">'+articleType[1]+'</a></li>'
+        );
+      });
+      articleTypeClick();
+    },
+    error: function(txtData){
+      alert("你是想说文章类型拿不到么。。。");
+    }
+  })
+}
+
+function articleTypeClick(){
+  $('li[id*="articleTypeLi"]').unbind('click').click(function(){
+    $('li[id*="articleTypeLi"]').removeClass("active");
+    $(this).addClass("active");
+    g_articleType = $(this).find("a").text();
+    articleList();
+  });
 }

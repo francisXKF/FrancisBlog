@@ -11,10 +11,12 @@ import org.springframework.stereotype.Component;
 
 import com.francis.blog.dao.ArticleDao;
 import com.francis.blog.pojo.Article;
+import com.francis.blog.util.QueryConstent;
 
 @Component("articleDao")
 @Scope("prototype")
 public class ArticleDaoImpl implements ArticleDao{
+
 	private SessionFactory sessionFactory;
 	
 	@Resource
@@ -27,10 +29,13 @@ public class ArticleDaoImpl implements ArticleDao{
 	}
 
 	@Override
-	public List<Article> query(Article article) {
+	public List<Article> query(Article article, Integer start) {
 		String sqlString = "from Article art where art.articleType.name like ? order by post_date desc";
+		//sqlString += " limit " + start + ", " + "10";  //固定十个一组
+//		System.out.println(start + "   " + (start + QueryConstent.STEP));
 		List<Article> articleList = currentSession().createQuery(sqlString)
 								.setParameter(0, article.getArticleType().getName())
+								.setFirstResult(start).setMaxResults(QueryConstent.STEP)
 								.list();
 		return articleList;
 	}
@@ -45,7 +50,17 @@ public class ArticleDaoImpl implements ArticleDao{
 		}
 		return articleList.get(0);
 	}
-
+	
+	@Override
+	public Integer querySize(Article article) {
+		String sqlString = "select count(art.id) from "
+				+ "Article art left join ArticleType artt on art.articleType_id = artt.id "
+				+ "where artt.name like ?";
+		Integer length = (new Integer(currentSession().createSQLQuery(sqlString)
+							.setParameter(0, article.getArticleType().getName())
+							.uniqueResult().toString())).intValue();
+		return length;
+	}
 	@Override
 	public boolean update(Article article) {
 		// TODO Auto-generated method stub
