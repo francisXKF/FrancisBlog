@@ -23,7 +23,7 @@
   <body>
     <div class="container">
       <div class="fs-menu">
-        <%@ include file="../html/_navigation_bar.html" %>
+        <%@ include file="../jsp/_navigation_bar.jsp" %>
       </div>
       <div class="col-md-4 col-md-offset-4">
         <div class="panel panel-default fs-transparency">

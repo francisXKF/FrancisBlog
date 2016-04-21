@@ -24,7 +24,7 @@
   <body>
     <div class="container">
       <div class="fs-menu">
-        <%@ include file="../html/_navigation_bar.html" %>
+        <%@ include file="../jsp/_navigation_bar.jsp" %>
       </div>
       <div class="fs-top">
         <div class="fs-top-user fs-float-left">
@@ -34,6 +34,9 @@
           		out.print(login_user.getName());
           	}
           %>
+          <div class="page-header">
+            <h1>告诉我，你的人生座右铭是啥子 <small>NullPointerException...</small></h1>
+          </div>
         </div>
       </div>
       <div class="container-fluid">
@@ -50,11 +53,20 @@
           <div class="fs-span9">
             <ul class="nav nav-tabs">
               <li role="presentation" class="active fs-article-bar" id="listArticleLi"><a href="#" id="listArticle">已发表文章</a></li>
-              <li role="presentation" class="fs-article-bar" id="addArticleLi"><a href="#" id="addArticle" role="button">写文章</a></li>
+               <%
+                  User index_user = (User)session.getAttribute("login_user");
+                  if(index_user != null){
+                    out.print(
+                      "<li role='presentation' class='fs-article-bar' id='addArticleLi'>"+
+                          "<a href='#' id='addArticle' role='button'>写文章</a>"+
+                      "</li>"
+                    );
+                  }
+                %>
               <li role="presentation" class="fs-article-bar" id="replyNewArticleLi">
                 <a href="#" id="replyNewArticle">新评论<span class="badge" id="replyNewNum">3</span></a>
               </li>
-              <li role="presentation" class="fs-article-bar" id=""><a href="#">提示</a></li>
+              <li role="presentation" class="fs-article-bar" id="hintBtn"><a href="#">提示</a></li>
             </ul>
             <div id="main" class="">
               <!--      文章内容        -->

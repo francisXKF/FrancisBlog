@@ -2,8 +2,10 @@ var startPage = 0;
 var g_articleType = "%";
 $(document).ready(function(){
   login();
+  logout();
   categoryOp();
   articleOp();
+  hintBtnClick();
 });
 function getRootPah(){
   //获取当前网址，如： http://localhost:8083/proj/meun.jsp  
@@ -47,7 +49,41 @@ function login(){
     });
   });
 }
-
+function logout(){
+  $('#logout').unbind('click').click(function(){
+    $.ajax({
+      url: "user_logout.action",
+      data: {},
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        var data = $.parseJSON(txtData);
+        if(data.status=="success"){
+          location.href="/francisBlog/jsp/login.jsp";
+        }
+        else{
+          alert("退出失败...");
+          location.href="/francisBlog/jsp/index.jsp";
+        }
+      }
+    })
+  });
+}
+function hintBtnClick(){
+  $('#hintBtn').unbind('click').click(function(){
+    $('.fs-article-bar').removeClass("active");
+    $('#hintBtn').addClass("active");
+    $('#main').load("../html/_hint.html");
+  });
+  $('#profileBtn').unbind('click').click(function(){
+    $('li[role="presentation"]').removeClass("active");
+    $('#profileBtn').addClass("active");
+    $('.fs-article-bar').removeClass("active");
+    $('#hintBtn').addClass("active");
+    
+    $('#main').load("../html/_hint.html");
+  });
+}
 function editorAdd(){
   var $preview, editor, toolbar;
   Simditor.locale = 'en-US';
@@ -119,22 +155,7 @@ function articleOp(){
       $('#main').load("../html/_404.html");
     }
   });
-  
-  $('#listArticle').unbind('click').click(function(){
-    startPage = 0;
-    $('.fs-article-bar').removeClass("active");
-    $('#listArticleLi').addClass("active");
-    $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
-      if(statusTxt=="success"){
-        articleList();
-        articleDetail();
-      }
-      if(statusTxt=="error"){
-        $('#main').load("../html/_404.html");
-      }
-    });
-  });
-  
+  listArticle();
   $('#addArticle').unbind('click').click(function(){
     $('.fs-article-bar').removeClass("active");
     $('#addArticleLi').addClass("active");
@@ -156,6 +177,24 @@ function articleOp(){
       if(statusTxt=="success"){
         $('#replyNewNum').html("");
         commentNew();
+        articleDetail();
+      }
+      if(statusTxt=="error"){
+        $('#main').load("../html/_404.html");
+      }
+    });
+  });
+}
+
+function listArticle(){
+  $('#listArticle').unbind('click').click(function(){
+    startPage = 0;
+    $('.fs-article-bar').removeClass("active");
+    $('#listArticleLi').addClass("active");
+    $('#main').empty();
+    $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="success"){
+        articleList();
         articleDetail();
       }
       if(statusTxt=="error"){
@@ -189,7 +228,7 @@ function articleDetail(){
                 var article = data[0];
                 $('.fs-article-title').html(article.title);
                 $('.fs-article-info').html('<a href="#" name='+article.user+'>'+article.user+'</a>'+
-                            '发表于'+article.post_data+' | 分类：<a href="#">'+article.articleType+'</a> | <a href="#">评论</a>');
+                            '发表于'+article.post_date+' | 分类：<a href="#">'+article.articleType+'</a> | <a href="#">评论</a>');
                 $('.fs-article-content').html(article.content);
                 
                 articleReplyLoad(article.id);
@@ -235,6 +274,7 @@ function articleAdd(){
               $('.fs-article-bar').removeClass("active");
               $('#listArticleLi').addClass("active");
               startPage = 0;
+              articleTypeLoad();
               articleList();
               articleDetail();
             }
@@ -244,14 +284,16 @@ function articleAdd(){
           });
         }
         else if(data.status=="failed"){
-          $("#main").html('<%@include page="/html/_404.html" %>');
+          alert("啊哦，添加失败了:" + data.errorMsg);
+          $('#main').load("../html/_404.html");
         }
         else{
           alert("什么？已添加到数据库，返回出错了？");
         }
       },
       error: function(txtData){
-        alert("啊哦，添加失败了");
+    	data = $.parseJSON(txtData);
+        alert("啊哦，添加失败了" + data.errorMsg);
       }
     });
   });
@@ -535,6 +577,6 @@ function articleTypeClick(){
     $('li[id*="articleTypeLi"]').removeClass("active");
     $(this).addClass("active");
     g_articleType = $(this).find("a").text();
-    articleList();
+    articleOp();
   });
 }

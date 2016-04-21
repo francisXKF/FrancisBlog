@@ -18,7 +18,9 @@
           <td>
             <div class="panel panel-default">
               <div class="panel-heading">分类:</div>
-              <div class="panel-body"><input class="form-control" type="text" id="addArticleType"></div>
+              <div class="panel-body">
+                <input class="form-control" type="text" id="addArticleType">
+              </div>
             </div>
           </td>
         </tr>
@@ -26,7 +28,9 @@
           <td>
             <div class="panel panel-default">
               <div class="panel-heading">标签:</div>
-              <div class="panel-body"><input class="form-control" type="text" id="addArticleTagsType"></div>
+              <div class="panel-body">
+                <input class="form-control" type="text" id="addArticleTagsType" placeholder="多个标签以空格分开">
+              </div>
               <div class="panel-body">
                 <small>最近使用标签:</small>
                 <span class="label label-default">Default</span>

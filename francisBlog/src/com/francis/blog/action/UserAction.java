@@ -111,11 +111,21 @@ public class UserAction extends ActionSupport{
 		session.setAttribute("login_user", login_user);
 //		map.put("selfsession", session);
 		map.put("status", "success");
+		map.put("username", login_user.getName());
+		map.put("userid", login_user.getId());
 		JSONObject jsonObject = JSONObject.fromObject(map);
 		this.result = jsonObject.toString();
 		return SUCCESS;
 	}
-	
+	public String logout() throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		session.setAttribute("login_user", null);
+		map.put("status", "success");
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		this.result = jsonObject.toString();
+		return SUCCESS;		
+	}
 	@Override
 	public String execute() throws Exception {
 		System.out.println("execute");

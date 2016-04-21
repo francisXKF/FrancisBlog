@@ -122,6 +122,7 @@ public class ArticleAction extends ActionSupport{
 	public String insert() throws Exception{
 		HashMap<String, String> map = new HashMap<String, String>();
 		HttpSession session = ServletActionContext.getRequest().getSession();
+		String errorMsg = "";
 		
 		user = (User)session.getAttribute("login_user"); //由session获取当前用户
 		article = new Article();
@@ -131,7 +132,7 @@ public class ArticleAction extends ActionSupport{
 		post_date = new java.sql.Timestamp(now_date.getTime());
 		
 		articleType.setName(article_type_name); //有session可以删除
-		tags_typeList = tags_typeString.split(",");
+		tags_typeList = tags_typeString.split("//s+");
 		int length = tags_typeList.length;
 		TagsType tagsTypeSingle;
 		for(int i = 0; i < length; i++){
@@ -140,6 +141,15 @@ public class ArticleAction extends ActionSupport{
 			tagsType.add(tagsTypeSingle);
 		}
 		
+		if(user == null || title.equals("") || articleType.equals("")){
+			System.out.println("null le ya");
+			errorMsg = "关键字段不能为空啊";
+			map.put("status", "failed");
+			map.put("errorMsg", errorMsg);
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			this.result = jsonObject.toString();
+			return SUCCESS;
+		}
 		article.setUser(user);
 		article.setTitle(title);
 		article.setState(state);
@@ -148,14 +158,18 @@ public class ArticleAction extends ActionSupport{
 		article.setPost_date(post_date);
 		article.setArticleType(articleType);
 		article.setTagsType(tagsType);
-		
-		if(articleManager.insert(article) == true){
-			map.put("status", "success");
-			JSONObject jsonObject = JSONObject.fromObject(map);
-			this.result = jsonObject.toString();
-			return SUCCESS;
+		try {
+			if(articleManager.insert(article) == true){
+				map.put("status", "success");
+				JSONObject jsonObject = JSONObject.fromObject(map);
+				this.result = jsonObject.toString();
+				return SUCCESS;
+			}	
+		} catch (Exception e) {
+			errorMsg = e.getMessage();
 		}
 		map.put("status", "failed");
+		map.put("errorMsg", errorMsg);
 		JSONObject jsonObject = JSONObject.fromObject(map);
 		this.result = jsonObject.toString();
 		return SUCCESS; //由ajax来处理failed
@@ -167,7 +181,7 @@ public class ArticleAction extends ActionSupport{
 		tagsType = new HashSet<TagsType>();
 		
 		articleType.setName(article_type_name);
-		tags_typeList = tags_typeString.split(",");
+		tags_typeList = tags_typeString.split("//s+");
 		int length = tags_typeList.length;
 		TagsType tagsTypeSingle;
 		for(int i = 0; i < length; i++){

@@ -22,6 +22,7 @@ import com.francis.blog.service.CommentsManager;
 import com.francis.blog.util.GetClassFieldName;
 import com.francis.blog.util.ObjectJsonValueProcessor;
 import com.francis.blog.util.ObjectJsonValueProcessor4Comments;
+import com.francis.blog.util.QueryConstent;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -117,6 +118,7 @@ public class CommentsAction extends ActionSupport{
 		user.setName(username);
 		user.setEmail(useremail);
 		user.setLinkURL(userurl);
+		user.setIdentity(QueryConstent.VISITOR);
 		article.setId(article_id);
 		comments.setArticle(article);
 		comments.setComment_date(comment_date);

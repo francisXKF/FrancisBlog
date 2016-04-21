@@ -1,0 +1,18 @@
+<div>
+  <div>开发仅在Chrome环境下测试，请尽量选择使用Chrome Browser</div>
+  <div>
+    <dl class="dl-horizontal">
+      <dt>开源项目：</dt>
+      <dd>GitHub:
+        <a href="https://github.com/francisXKF/FrancisBlog">
+              https://github.com/francisXKF/FrancisBlog
+        </a>
+      </dd>
+      <dt>Wechat:
+        <dd>
+          <img src="../img/wechat.jpg" width="100px" height="100px"></img>
+        </dd>
+      </dt>
+    </dl>
+  </div>
+</div>
