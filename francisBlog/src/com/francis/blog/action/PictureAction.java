@@ -52,26 +52,27 @@ public class PictureAction extends ActionSupport{
 	}
 	
 	public String load() throws Exception {
-		String rootPath = ServletActionContext.getRequest().getRealPath("/upload");
+		String rootPath = ServletActionContext.getRequest().getRealPath("/");
 		InputStream inputStream = new FileInputStream(file);
-		File destFile = new File(rootPath, fileFileName);
-		
-//		File destFile = new File("E:/PictureUpload", fileFileName);
+//		File destFile = new File(rootPath, fileFileName);
+//		System.out.println(rootPath);
+		File destFile = new File(rootPath+"/upload/", fileFileName);
+//		System.out.println(destFile);
 		OutputStream outputStream = new FileOutputStream(destFile);
 		byte[] buffer = new byte[400];
 		int length = 0;
 		while((length = inputStream.read(buffer)) > 0){
 			outputStream.write(buffer, 0, length);
-			System.out.println("写入啊");
+//			System.out.println("写入啊");
 		}
-		System.out.println(rootPath);
-		System.out.println("enter dest " + fileFileName);
+//		System.out.println(rootPath);
+//		System.out.println("enter dest " + fileFileName);
 		inputStream.close();
 		outputStream.close();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("success", true + "");
-		map.put("file_path", rootPath+fileFileName);
+		map.put("file_path", "/francisBlog/upload/"+fileFileName);
 		JSONObject jsonObject = JSONObject.fromObject(map);
 		this.result = jsonObject.toString();
 		return SUCCESS;

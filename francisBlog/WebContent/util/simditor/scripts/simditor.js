@@ -4434,6 +4434,9 @@ ImageButton = (function(superClass) {
           alert(msg);
           img_path = _this.defaultImage;
         } else {
+          //test by francis
+//          alert(result);
+//          alert(result.file_path);
           img_path = result.file_path;
         }
         _this.loadImage($img, img_path, function() {

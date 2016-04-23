@@ -15,12 +15,6 @@
       </div>
       <div class="fs-top">
         <div class="fs-top-user fs-float-left">
-          <%
-          	User login_user = (User)request.getSession().getAttribute("login_user");
-          	if(login_user != null){
-          		out.print(login_user.getName());
-          	}
-          %>
           <div class="page-header">
             <h1>告诉我，你的人生座右铭是啥子 <small>NullPointerException...</small></h1>
           </div>
