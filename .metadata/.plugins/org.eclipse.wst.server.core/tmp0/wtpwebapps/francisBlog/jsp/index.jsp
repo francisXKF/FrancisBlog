@@ -5,20 +5,7 @@
 <html lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="/francisBlog/css/fsblog.css">
-    <link rel="stylesheet" href="/francisBlog/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/francisBlog/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/francisBlog/util/simditor/styles/simditor.css">
-    <link rel="stylesheet" href="/francisBlog/util/simditor/styles/font-awesome.min.css">
-    
-    <script src="/francisBlog/js/jquery.min.js"></script>
-    <script src="/francisBlog/js/fsblog.js"></script>
-<!--    <script src="/francisBlog/js/require.js"></script>-->
-    <script src="/francisBlog/util/simditor/scripts/module.js"></script>
-    <script src="/francisBlog/util/simditor/scripts/uploader.js"></script>
-    <script src="/francisBlog/util/simditor/scripts/hotkeys.js"></script>
-    <script src="/francisBlog/util/simditor/scripts/simditor.js"></script>
-    <!--    <link rel="stylesheet" href="/francisBlog/css/bootstrap.css">-->
+    <%@ include file="/jsp/_base.jsp" %>
     <title>首页</title>
   </head>
   <body>

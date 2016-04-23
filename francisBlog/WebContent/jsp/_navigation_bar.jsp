@@ -13,7 +13,7 @@
       <%
       	User user = (User)session.getAttribute("login_user");
       	if(user == null){
-      		out.print("login");
+      		out.print("Login");
       	}
       	else{
       		out.print(user.getName());

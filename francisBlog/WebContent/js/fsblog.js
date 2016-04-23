@@ -300,6 +300,7 @@ function articleAdd(){
 }
 
 function articleList(){
+  NProgress.start();
   $.ajax({
     url: "article_query.action",
     data: {
@@ -330,6 +331,7 @@ function articleList(){
         )
         
       });
+      NProgress.done();
       articleDetail();
       pageBarLoad();
     },

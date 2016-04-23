@@ -47,4 +47,8 @@
 	 <listener>
 	 	<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> 
 	 </listener>
+	 <error-page>  
+		<error-code>404</error-code>  
+		<location>/jsp/index.jsp</location>  
+	</error-page>
 </web-app>

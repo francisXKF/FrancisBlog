@@ -4,13 +4,7 @@
 <html lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="/francisBlog/css/fsblog.css">
-    <link rel="stylesheet" href="/francisBlog/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/francisBlog/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/francisBlog/util/simditor/styles/font-awesome.min.css">
-    
-    <script src="/francisBlog/js/jquery.min.js"></script>
-    <script src="/francisBlog/js/fsblog.js"></script>
+    <%@ include file="/jsp/_base.jsp" %>
     <title>登录</title>
     <style>
       body{
