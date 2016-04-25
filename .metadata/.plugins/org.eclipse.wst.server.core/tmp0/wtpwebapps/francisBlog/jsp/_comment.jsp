@@ -18,7 +18,7 @@
           <td>
             <div class="panel panel-default">
               <div class="panel-heading">Email:</div>
-              <div class="panel-body"><input class="form-control" type="email" name="usreEmail"></div>
+              <div class="panel-body"><input class="form-control" type="email" name="userEmail"></div>
             </div>
           </td>
         </tr>
@@ -35,7 +35,8 @@
             <div class="panel panel-default">
               <div class="panel-heading">Content:</div>
               <div class="panel-body">
-                <textarea class="editor" placeholder="这里输入内容" data-autosave="editor-content" autofocus required></textarea>
+                <textarea class="editor" placeholder="这里输入内容"
+                          data-autosave="editor-content" autofocus required id="addCommentContent"></textarea>
               </div>
             </div>
           </td>

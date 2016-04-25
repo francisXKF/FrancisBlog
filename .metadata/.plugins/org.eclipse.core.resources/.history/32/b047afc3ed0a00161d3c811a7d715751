@@ -1,0 +1,9 @@
+package com.francis.blog.dao;
+
+import com.francis.blog.pojo.Motto;
+
+public interface MottoDao {
+	public Motto query(Motto motto);
+	public boolean delete(Motto motto);
+	public boolean insert(Motto motto);
+}

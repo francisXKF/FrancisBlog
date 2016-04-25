@@ -6,6 +6,7 @@ $(document).ready(function(){
   categoryOp();
   articleOp();
   hintBtnClick();
+  MottoOp();
 });
 function getRootPah(){
   //获取当前网址，如： http://localhost:8083/proj/meun.jsp  
@@ -106,16 +107,6 @@ function editorAdd(){
         connectionCount: 3,  
         leaveConfirm: '正在上传文件',  
       },
-      
-      /*success: (function(_this){
-        return function(txtData){
-          var data = $.parseJSON(txtData);
-          _this.trigger('uploadprogress', [file, file.size, file.size]);  
-          _this.trigger('uploadsuccess', [file, data]); 
-          return $(document).trigger('uploadsuccess', [file, data, _this]);
-        }
-      })(this),
-      */
       imageButton: ['upload']
     });
   }); 
@@ -186,6 +177,21 @@ function articleOp(){
   });
 }
 
+
+function MottoOp(){
+  $('#MottoManagerBtn').unbind('click').click(function(){
+    $('#adminMain').load("admin/_admin_motto.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="success"){
+        mottoAdd();
+      }
+      if(statusTxt=="error"){
+        $('#main').load("../html/_404.html");
+      }
+    });
+  });
+}
+
+
 function listArticle(){
   $('#listArticle').unbind('click').click(function(){
     startPage = 0;
@@ -208,7 +214,8 @@ function articleDetail(){
   $('.fs-article-title').unbind('click').click(function(){
 //    var nowId = $(this).attr('id');
 //    alert(nowId);
-//    alert($(this).html());
+    $('.fs-article-bar').removeClass("active");
+    $('#listArticleLi').addClass("active");
     var id = $(this).attr("id");
     $('#main').load("_article_detail.jsp", function(responseTxt, statusTxt, xhr){
       if(statusTxt=="success"){
@@ -230,9 +237,11 @@ function articleDetail(){
                 $('.fs-article-info').html('<a href="#" name='+article.user+'>'+article.user+'</a>'+
                             '发表于'+article.post_date+' | 分类：<a href="#">'+article.articleType+'</a> | <a href="#">评论</a>');
                 $('.fs-article-content').html(article.content);
-                
+                articleUpdateClick(article);
+                articleDelete(article.id);
                 articleReplyLoad(article.id);
                 commentAddClick(article.id);
+                
               }
             });
           }
@@ -248,15 +257,22 @@ function articleDetail(){
   });
 }
 
-function articleAdd(){
+function articleAdd(article_id){
   $('#addArticleSubmit').unbind('click').click(function(){
     var allowComments = 0;
     if($('#allowComments').is(":checked") == true){
       allowComments = 1;
     }
+    if(article_id != null && article_id != ""){
+      URLString = "article_update.action";
+    }
+    else{
+      URLString = "article_insert.action";
+    }
     $.ajax({
-      url: "article_insert.action",
+      url: URLString,
       data: {
+        id: article_id,
         title: $('#addArticleTitle').val(),
         article_type_name: $('#addArticleType').val(),
         content: $('#addArticleContent').val(),
@@ -299,6 +315,47 @@ function articleAdd(){
   });
 }
 
+function articleDelete(article_id){
+  $('#deleteArticleBtn').unbind('click').click(function(){
+    $.ajax({
+      url: "article_delete.action",
+      data: {
+        id: article_id,
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        var data = $.parseJSON(txtData);
+        if(data.status=="success"){
+          $('#main').load("_article_list.jsp", function(responseTxt, statusTxt, xhr){
+            if(statusTxt=="success"){
+              $('.fs-article-bar').removeClass("active");
+              $('#listArticleLi').addClass("active");
+              startPage = 0;
+              articleTypeLoad();
+              articleList();
+              articleDetail();
+            }
+            if(statusTxt=="error"){
+              $('#main').load("../html/_404.html");
+            }
+          });
+        }
+        else if(data.status=="failed"){
+          alert("啊哦，删除失败了:" + data.errorMsg);
+          $('#main').load("../html/_404.html");
+        }
+        else{
+          alert("什么？已添加到数据库，返回出错了？");
+        }
+      },
+      error: function(txtData){
+    	data = $.parseJSON(txtData);
+        alert("啊哦，添加失败了" + data.errorMsg);
+      }
+    });
+  });
+}
 function articleList(){
   NProgress.start();
   $.ajax({
@@ -341,6 +398,27 @@ function articleList(){
   });
 }
 
+function articleUpdateClick(article){
+  $('#updateArticleBtn').unbind('click').click(function(){
+    alert("enter");
+    $('.fs-article-bar').removeClass("active");
+    $('#addArticleLi').addClass("active");
+    $('#main').load("_article_add.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="success"){
+        $('#addArticleTitle').val(article.title);
+        $('#addArticleType').val(article.articleType);
+        $('#addArticleTagsType').val(article.tagsType);
+        $('#addArticleContent').val(article.content);
+        editorAdd();
+        articleAdd(article.id)
+      }
+      if(statusTxt=="error"){
+        alert("无法写新文章...");
+      }
+    });
+  });
+}
+
 function commentAddClick(article_id){
   //click the comment btn
   $('.fs-comment').unbind('click').click(function(){
@@ -365,7 +443,7 @@ function commentAdd(article_id, replycomment_id){
         useremail: $('input[name="userEmail"]').val(),
         userurl: $('input[name="userUrl"]').val(),
         replycomment_id: replycomment_id,
-        content: $('.editor').val()
+        content: $('#addCommentContent').val()
       },
       type: "post",
       datatype: "json",
@@ -373,7 +451,7 @@ function commentAdd(article_id, replycomment_id){
         $('input[name="username"]').val("");
         $('input[name="userEmail"]').val("");
         $('input[name="userUrl"]').val("");
-        $('.editor').text("");
+        $('#addCommentContent').val("");
         $('#commentMain').addClass("fs-hidden");
         articleReplyLoad(article_id);
       },
@@ -404,10 +482,11 @@ function articleReplyLoad(article_id){
           var data = $.parseJSON(txtData);
           $(data).each(function(i){
             var comments = data[i];
-            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a>:<span>'+comments.content+'</span>'+
-                            '<div><span class="text-muted">'+comments.comment_date+'</span>'+
-                            '<a href="#commentMain"><span class="btn btn-xs glyphicon glyphicon-comment fs-reply-btn" name="'+comments.id+'">'
-                            +'</span></a></div><hr>';
+            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a>回复于：'+
+                            '<span class="text-muted">'+comments.comment_date+'</span>'+
+                            '<a href="#commentMain">'+
+                            '<span class="btn btn-xs glyphicon glyphicon-comment fs-reply-btn" name="'+comments.id+'">'
+                            +'</span></a><span>'+comments.content+'</span><hr>';
             if(comments.replycomment_id == 0){
               $(listGroupItem).attr("id", "item" + comments.id).appendTo('#0');
               $(fsReplyBody).attr("id", "body" + comments.id).appendTo('#item' + comments.id);
@@ -453,14 +532,13 @@ function commentNew(){
         var data = $.parseJSON(txtData);
         $(data).each(function(i){
           var comments = data[i];
-//          alert(comments);
           $('#commentNewReply').append(
             '<tr>'+
               '<td>'+
                 '<div class="fs-article-meta">'+
                   '<a href="#">'+comments[0]+'</a> : <span>评论了你的文章</span> :'+ 
-                  '<span class="fs-article-title">'+
-                      '<a href="'+comments[1]+'" class="text-primary fs-article-title">'+comments[2]+'</a>'+
+                  '<span>'+
+                      '<a href="javascript:void(0)" id="'+comments[1]+'" class="text-primary fs-article-title">'+comments[2]+'</a>'+
                   '</span>'+
                   '<div>'+
                   '<span class="text-muted">'+comments[3]+'</span>'+
@@ -470,6 +548,7 @@ function commentNew(){
             '</tr>'
           );
         });
+        articleDetail();
       }
     });
   //});
@@ -581,4 +660,60 @@ function articleTypeClick(){
     g_articleType = $(this).find("a").text();
     articleOp();
   });
+}
+
+function mottoAdd(){
+  $('#mottoAddBtn').unbind('click').click(function(){
+    $.ajax({
+      url: "motto_insert.action",
+      data: {
+        name: $('#mottoAddInput').val()
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        mottoQuery();
+      },
+      error: function(txtData){
+        $('#commentsReply').load("../../html/_404.html");
+      }
+    })
+  });
+}
+
+//暂时不用
+function mottoDelete(){
+  var mottoId = $('#mottoShowId').val();
+  $('#mottoDeleteBtn').unbind('click').click(function(){
+    $.ajax({
+      url: "motto_delete.action",
+      data: {
+        id: mottoId
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        alert("删除成功");
+      },
+      error: function(txtData){
+        alert("删除失败");
+      }
+    });
+  });
+}
+
+function mottoQuery(){
+  $.ajax({
+    url: "motto_query.action",
+    data: {},
+    type: "post",
+    datatype: "json",
+    success: function(txtData){
+      location.href="/francisBlog/jsp/admin.jsp";
+    },
+    error: function(txtData){
+      alert("重新加载Motto失败...")
+      $('#commentsReply').load("../../html/_404.html");
+    }
+  })
 }

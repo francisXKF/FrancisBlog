@@ -29,7 +29,7 @@ public class ArticleTypeDaoImpl implements ArticleTypeDao{
 
 	@Override
 	public List<Map<String, Object>> query(ArticleType articleType) {
-		String sqlString = "select artt.id as ID, artt.name as Name from ArticleType artt";
+		String sqlString = "select artt.id as ID, artt.name as Name from ArticleType artt order by artt.name";
 		List<Map<String, Object>> articleTypeList = currentSession().createSQLQuery(sqlString)
 													.list();
 		return articleTypeList;
@@ -48,8 +48,8 @@ public class ArticleTypeDaoImpl implements ArticleTypeDao{
 
 	@Override
 	public boolean update(ArticleType articleType) {
-		// TODO Auto-generated method stub
-		return false;
+		currentSession().update(articleType);
+		return true;
 	}
 
 	@Override

@@ -63,14 +63,14 @@ public class ArticleDaoImpl implements ArticleDao{
 	}
 	@Override
 	public boolean update(Article article) {
-		// TODO Auto-generated method stub
-		return false;
+		currentSession().update(article);
+		return true;
 	}
 
 	@Override
 	public boolean delete(Article article) {
-		// TODO Auto-generated method stub
-		return false;
+		currentSession().delete(article);
+		return true;
 	}
 
 	@Override

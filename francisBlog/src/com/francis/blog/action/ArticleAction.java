@@ -150,16 +150,76 @@ public class ArticleAction extends ActionSupport{
 			this.result = jsonObject.toString();
 			return SUCCESS;
 		}
+		String replaceContent = content.replace("'", "\\\'");
+		replaceContent = replaceContent.replaceAll("\\r|\n", "<br>");
 		article.setUser(user);
 		article.setTitle(title);
 		article.setState(state);
-		article.setContent(content);
+		article.setContent(replaceContent);
 		article.setAllow_comments(allow_comments);
 		article.setPost_date(post_date);
 		article.setArticleType(articleType);
 		article.setTagsType(tagsType);
 		try {
 			if(articleManager.insert(article) == true){
+				map.put("status", "success");
+				JSONObject jsonObject = JSONObject.fromObject(map);
+				this.result = jsonObject.toString();
+				return SUCCESS;
+			}	
+		} catch (Exception e) {
+			errorMsg = e.getMessage();
+		}
+		map.put("status", "failed");
+		map.put("errorMsg", errorMsg);
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		this.result = jsonObject.toString();
+		return SUCCESS; //由ajax来处理failed
+	}
+	public String update() throws Exception{
+		HashMap<String, String> map = new HashMap<String, String>();
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		String errorMsg = "";
+		
+		user = (User)session.getAttribute("login_user"); //由session获取当前用户
+		article = new Article();
+		articleType = new ArticleType();
+		tagsType = new HashSet<TagsType>();
+		now_date = new Date();
+		post_date = new java.sql.Timestamp(now_date.getTime());
+		
+		articleType.setName(article_type_name); //有session可以删除
+		tags_typeList = tags_typeString.split("//s+");
+		int length = tags_typeList.length;
+		TagsType tagsTypeSingle;
+		for(int i = 0; i < length; i++){
+			tagsTypeSingle = new TagsType();
+			tagsTypeSingle.setName(tags_typeList[i]);
+			tagsType.add(tagsTypeSingle);
+		}
+		
+		if(user == null || title.equals("") || articleType.equals("")){
+			System.out.println("null le ya");
+			errorMsg = "关键字段不能为空啊";
+			map.put("status", "failed");
+			map.put("errorMsg", errorMsg);
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			this.result = jsonObject.toString();
+			return SUCCESS;
+		}
+		String replaceContent = content.replace("'", "\\\'");
+		replaceContent = replaceContent.replaceAll("\\r|\n", "<br>");
+		article.setId(id);
+		article.setUser(user);
+		article.setTitle(title);
+		article.setState(state);
+		article.setContent(replaceContent);
+		article.setAllow_comments(allow_comments);
+		article.setPost_date(post_date);
+		article.setArticleType(articleType);
+		article.setTagsType(tagsType);
+		try {
+			if(articleManager.update(article) == true){
 				map.put("status", "success");
 				JSONObject jsonObject = JSONObject.fromObject(map);
 				this.result = jsonObject.toString();
@@ -283,6 +343,21 @@ public class ArticleAction extends ActionSupport{
 		int cnt = articleManager.querySize(article);
 		cnt = (cnt / step) + (cnt % step == 0 ? 0 : 1);
 		map.put("cnt", cnt + "");
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		this.result = jsonObject.toString();
+		return SUCCESS;
+	}
+	
+	public String delete() throws Exception{
+		Map<String, String> map = new HashMap<String, String>();
+		article = new Article();
+		article.setId(id);
+		if(articleManager.delete(article)){
+			map.put("status", "success");
+		}
+		else{
+			map.put("status", "failed");
+		}
 		JSONObject jsonObject = JSONObject.fromObject(map);
 		this.result = jsonObject.toString();
 		return SUCCESS;

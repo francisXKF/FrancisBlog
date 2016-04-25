@@ -1,3 +1,4 @@
+<%@page import="com.francis.blog.pojo.Motto"%>
 <%@page import="com.francis.blog.pojo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -16,7 +17,17 @@
       <div class="fs-top">
         <div class="fs-top-user fs-float-left">
           <div class="page-header">
-            <h1>告诉我，你的人生座右铭是啥子 <small>NullPointerException...</small></h1>
+            <h1>告诉我，你的人生座右铭是啥子 
+            <%
+            	Motto motto = (Motto)session.getAttribute("motto");
+            	if(motto == null){
+            		out.print("<small>NullPointerException...</small>");
+            	}
+            	else{
+            		out.print("<small id='mottoShowId' name='"+motto.getId()+"'>"+motto.getName()+"</small>");
+            	}
+            %>
+            </h1>
           </div>
         </div>
       </div>

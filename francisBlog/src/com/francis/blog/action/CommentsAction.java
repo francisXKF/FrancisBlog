@@ -22,6 +22,7 @@ import com.francis.blog.service.CommentsManager;
 import com.francis.blog.util.GetClassFieldName;
 import com.francis.blog.util.ObjectJsonValueProcessor;
 import com.francis.blog.util.ObjectJsonValueProcessor4Comments;
+import com.francis.blog.util.ObjectJsonValueProcessor4DateFormat;
 import com.francis.blog.util.QueryConstent;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -114,7 +115,8 @@ public class CommentsAction extends ActionSupport{
 		now_date = new Date();
 		
 		comment_date = new java.sql.Timestamp(now_date.getTime());
-		
+		String replaceContent = content.replace("'", "\\\'");
+		replaceContent = replaceContent.replaceAll("\\r|\n", "<br>");
 		user.setName(username);
 		user.setEmail(useremail);
 		user.setLinkURL(userurl);
@@ -122,7 +124,7 @@ public class CommentsAction extends ActionSupport{
 		article.setId(article_id);
 		comments.setArticle(article);
 		comments.setComment_date(comment_date);
-		comments.setContent(content);
+		comments.setContent(replaceContent);
 		comments.setReplycomment_id(replycomment_id);
 		comments.setUser(user);
 		if(commentsManager.insert(comments) == true){
@@ -153,9 +155,12 @@ public class CommentsAction extends ActionSupport{
 	public String queryByTime() throws Exception{
 		List<Map<String, Object>> commentsList = commentsManager.queryByTime(comment_date);
 		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.registerJsonValueProcessor(java.sql.Timestamp.class, 
+				new ObjectJsonValueProcessor4DateFormat("yyyy-MM-dd HH:mm:ss"));
+//		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new ObjectJsonValueProcessor4DateFormat("yyyy-MM-dd"));
 		JSONArray jsonArray = JSONArray.fromObject(commentsList, jsonConfig);
 		this.result = jsonArray.toString();
-//		System.out.println(result);
+		System.out.println(result);
 		return SUCCESS;
 	}
 }

@@ -1,3 +1,4 @@
+<%@page import="com.francis.blog.pojo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,7 +25,15 @@
       <p>目前有一份测试数据，大约2000提交，目测重复的代码很多。</p>-->
     </div>
   </div>
-  <a href="#" class="btn btn-primary pull-left">修改</a>
+  <%
+	  User index_user = (User)session.getAttribute("login_user");
+	  if(index_user != null){
+	    out.print(
+	      "<a href='javascript:void(0)' id='updateArticleBtn' class='btn btn-primary pull-left'>修改</a>"+
+	      "<a href='javascript:void(0)' id='deleteArticleBtn' class='btn btn-primary pull-left'>删除</a>"
+	    );
+	  }
+  %>
   <a href="#commentMain" class="btn btn-info pull-right fs-comment">评论</a><br>
   <hr>
   <div id="commentsReply">

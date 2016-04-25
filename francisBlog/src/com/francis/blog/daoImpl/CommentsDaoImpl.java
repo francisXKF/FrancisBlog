@@ -40,7 +40,7 @@ public class CommentsDaoImpl implements CommentsDao{
 		String sqlString = "select user.name as username, art.id as article_id, "+
 							"art.title as article_title, cmt.comment_date as comment_date "+
 							"from (Comments cmt left join Article art on cmt.article_id = art.id)"+
-							" left join User user on cmt.user_id = user.id";
+							" left join User user on cmt.user_id = user.id order by comment_date desc";
 //		System.out.println(sqlString);
 		List<Map<String, Object>> queryList= currentSession().createSQLQuery(sqlString).list();
 		return queryList;

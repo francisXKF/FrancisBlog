@@ -59,14 +59,28 @@ public class ArticleManagerImpl implements ArticleManager{
 	}
 	@Override
 	public boolean update(Article article) {
-		// TODO Auto-generated method stub
-		return false;
+		if(articleTypeDao.queryByName(article.getArticleType().getName()) == null){
+			articleTypeDao.insert(article.getArticleType());
+		}
+		article.setArticleType(articleTypeDao.queryByName(article.getArticleType().getName()));
+		Set<TagsType> tagsTypes = article.getTagsType();
+		Set<TagsType> tagsTypesQueryed = new HashSet<TagsType>();
+		TagsType tagsType;
+		Iterator<TagsType> it = tagsTypes.iterator();
+		while(it.hasNext()){
+			tagsType = it.next();
+			if(tagsTypeDao.queryByName(tagsType.getName()) == null){
+				tagsTypeDao.insert(tagsType);
+			}
+			tagsTypesQueryed.add(tagsTypeDao.queryByName(tagsType.getName()));
+		}
+		article.setTagsType(tagsTypesQueryed);
+		return articleDao.update(article);
 	}
 
 	@Override
 	public boolean delete(Article article) {
-		// TODO Auto-generated method stub
-		return false;
+		return articleDao.delete(article);
 	}
 
 	@Override

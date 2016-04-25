@@ -1,0 +1,38 @@
+package com.francis.blog.serviceImpl;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
+import com.francis.blog.dao.MottoDao;
+import com.francis.blog.pojo.Motto;
+import com.francis.blog.service.MottoManager;
+
+@Component("mottoManager")
+public class MottoManagerImpl implements MottoManager{
+	private MottoDao mottoDao;
+	
+	@Resource
+	public void setMottoDao(MottoDao mottoDao) {
+		this.mottoDao = mottoDao;
+	}
+
+	@Override
+	public Motto query(Motto motto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean delete(Motto motto) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean insert(Motto motto) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

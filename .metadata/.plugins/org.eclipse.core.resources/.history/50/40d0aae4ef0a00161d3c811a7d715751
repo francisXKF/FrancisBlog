@@ -1,0 +1,57 @@
+package com.francis.blog.action;
+
+import java.sql.Timestamp;
+
+import javax.annotation.Resource;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import com.francis.blog.service.MottoManager;
+import com.opensymphony.xwork2.ActionSupport;
+
+@Component("motto")
+@Scope("prototype")
+public class MottoAction extends ActionSupport{
+	private Integer id;
+	private String name;
+	private Timestamp post_date;
+	
+	private MottoManager mottoManager;
+	private String result;
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Timestamp getPost_date() {
+		return post_date;
+	}
+	public void setPost_date(Timestamp post_date) {
+		this.post_date = post_date;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
+	@Resource
+	public void setMottoManager(MottoManager mottoManager) {
+		this.mottoManager = mottoManager;
+	}
+	
+	public String insert() throws Exception{
+		
+		return SUCCESS;
+	}
+}

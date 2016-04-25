@@ -11,8 +11,10 @@
 <link rel="stylesheet" href="${contextPath }util/simditor/styles/simditor.css">
 <link rel="stylesheet" href="${contextPath }util/simditor/styles/font-awesome.min.css">
 <link rel="stylesheet" href="${contextPath }util/nprogress/nprogress.css">
+<!--<link rel="stylesheet" href="${contextPath }util/customAlert/css/style.css">  -->
 
 <script src="${contextPath }util/nprogress/nprogress.js"></script>
+<!--<script src="${contextPath }util/customAlert/js/index.js"></script>  -->
 <script src="${contextPath }js/jquery.min.js"></script>
 <script src="${contextPath }js/fsblog.js"></script>
 <!--    <script src="/francisBlog/js/require.js"></script>-->
