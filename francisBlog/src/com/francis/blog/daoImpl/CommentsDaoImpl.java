@@ -17,6 +17,7 @@ import com.francis.blog.pojo.Comments;
 @Component("commentsDao")
 @Scope("prototype")
 public class CommentsDaoImpl implements CommentsDao{
+
 	private SessionFactory sessionFactory;
 
 	@Resource
@@ -45,7 +46,16 @@ public class CommentsDaoImpl implements CommentsDao{
 		List<Map<String, Object>> queryList= currentSession().createSQLQuery(sqlString).list();
 		return queryList;
 	}
-
+	
+	@Override
+	public Comments queryByUserId(Integer user_id) {
+		String sqlString = "from Comments cmt where cmt.user.id=" + user_id;
+		List<Comments> queryList = currentSession().createQuery(sqlString).list();
+		if(queryList.isEmpty()){
+			return null;
+		}
+		return queryList.get(0);
+	}
 	@Override
 	public boolean update(Comments comments) {
 		// TODO Auto-generated method stub

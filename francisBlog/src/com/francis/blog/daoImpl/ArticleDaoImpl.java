@@ -50,6 +50,15 @@ public class ArticleDaoImpl implements ArticleDao{
 		}
 		return articleList.get(0);
 	}
+
+	@Override
+	public Article queryByUserId(Integer user_id) {
+		String sqlString = "from Article art where art.user.id=" + user_id;
+		List<Article> articleList = currentSession().createQuery(sqlString).list();
+		if(articleList.isEmpty())
+			return null;
+		return articleList.get(0);
+	}
 	
 	@Override
 	public Integer querySize(Article article) {

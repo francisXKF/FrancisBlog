@@ -160,7 +160,7 @@ public class CommentsAction extends ActionSupport{
 //		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new ObjectJsonValueProcessor4DateFormat("yyyy-MM-dd"));
 		JSONArray jsonArray = JSONArray.fromObject(commentsList, jsonConfig);
 		this.result = jsonArray.toString();
-		System.out.println(result);
+//		System.out.println(result);
 		return SUCCESS;
 	}
 }

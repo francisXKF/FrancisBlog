@@ -1,0 +1,65 @@
+package com.francis.blog.serviceImpl;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
+import com.francis.blog.dao.UserDao;
+import com.francis.blog.pojo.User;
+import com.francis.blog.service.UserManager;
+
+@Component("userManager")
+public class UserManagerImpl implements UserManager{
+	private UserDao userDao;
+	public UserDao getUserDao() {
+		return userDao;
+	}
+	
+	@Resource
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
+	@Override
+	public List<Map<String, Object>> query() {
+		return userDao.query();
+	}
+
+	@Override
+	public User exist(User user) {
+		return userDao.queryExist(user);
+	}
+	@Override
+	public User queryById(Integer id) {
+		
+		List<Map<String, Object>> userList = userDao.queryById(id);
+		if(userList.isEmpty()){
+			return null;
+		}
+		Map<String, Object> userMap = userList.get(0);
+		User user = new User();
+		user.setId(Integer.parseInt((String)userMap.get("id")));
+		user.setName((String)userMap.get("name"));
+		user.setEmail((String)userMap.get("email"));
+		user.setLinkURL((String)userMap.get("linkURL"));
+		user.setIdentity(Integer.parseInt((String)userMap.get("identity")));
+		return user;
+	}
+	@Override
+	public boolean update(User user) {
+		return userDao.update(user);
+	}
+
+	@Override
+	public boolean delete(User user) {
+		return userDao.delete(user);
+	}
+
+	@Override
+	public boolean insert(User user) {
+		return userDao.insert(user);
+	}
+}

@@ -7,6 +7,7 @@ $(document).ready(function(){
   articleOp();
   hintBtnClick();
   MottoOp();
+  userOp();
 });
 function getRootPah(){
   //获取当前网址，如： http://localhost:8083/proj/meun.jsp  
@@ -35,6 +36,7 @@ function login(){
         var data = $.parseJSON(txtData);
         if(data.status=="success"){
           $('#loginSubmit').val("已登录");
+          mottoQuery();
           location.href="/francisBlog/jsp/index.jsp";
         }
         else if(data.status=="failed"){
@@ -177,9 +179,10 @@ function articleOp(){
   });
 }
 
-
 function MottoOp(){
   $('#MottoManagerBtn').unbind('click').click(function(){
+    $('#adminCategoryOne li').removeClass("active");
+    $('#MottoManagerBtn').addClass("active");
     $('#adminMain').load("admin/_admin_motto.jsp", function(responseTxt, statusTxt, xhr){
       if(statusTxt=="success"){
         mottoAdd();
@@ -191,6 +194,20 @@ function MottoOp(){
   });
 }
 
+function userOp(){
+  $('#userManagerBtn').unbind('click').click(function(){
+    $('#adminCategoryOne li').removeClass("active");
+    $('#userManagerBtn').addClass("active");
+    $('#adminMain').load("admin/_admin_user_info.jsp", function(responseTxt, statusTxt, xhr){
+      if(statusTxt=="success"){
+        userList();
+      }
+      if(statusTxt=="error"){
+        $('#main').load("../html/_404.html");
+      }
+    });
+  });
+}
 
 function listArticle(){
   $('#listArticle').unbind('click').click(function(){
@@ -400,7 +417,7 @@ function articleList(){
 
 function articleUpdateClick(article){
   $('#updateArticleBtn').unbind('click').click(function(){
-    alert("enter");
+//    alert("enter");
     $('.fs-article-bar').removeClass("active");
     $('#addArticleLi').addClass("active");
     $('#main').load("_article_add.jsp", function(responseTxt, statusTxt, xhr){
@@ -712,8 +729,144 @@ function mottoQuery(){
       location.href="/francisBlog/jsp/admin.jsp";
     },
     error: function(txtData){
-      alert("重新加载Motto失败...")
-      $('#commentsReply').load("../../html/_404.html");
+      alert("重新加载Motto失败...");
+      $('#adminMain').load("../html/_404.html");
     }
   })
+}
+
+function userList(){
+  $.ajax({
+    url: "user_queryList.action",
+    data: {},
+    type: "post",
+    datatype: "json",
+    success: function(txtData){
+      var data = $.parseJSON(txtData);
+      $(data).each(function(i){
+        user = data[i];
+        $('#userInfoTable').append(
+          '<tr id="userInfoTr'+user[0]+'" name="'+user[0]+'">'+
+            '<td name="userInfoName'+user[0]+'">'+user[1]+'</td>'+
+            '<td name="userInfoEmail'+user[0]+'">'+user[2]+'</td>'+
+            '<td name="userInfoLinkURL'+user[0]+'"><a href="'+user[3]+'" target="_blank">'+user[3]+'</a></td>'+
+            '<td name="userInfoIdentity'+user[0]+'">'+user[4]+'</td>'+
+            '<td><span class="btn btn-xs glyphicon glyphicon-pencil user-info-edit"'+
+                  'name="'+user[0]+'"></span>'+
+                 ' <span class="btn btn-xs glyphicon glyphicon-remove user-info-delete"'+
+                  'name="'+user[0]+'"></span</td>'+
+          '</tr>'
+        );
+      });
+      userUpdateClick();
+      userDelete();
+    },
+    error: function(txtData){
+      alert("0.0 用户呢？");
+      $('#adminMain').load("../html/_404.html");
+    }
+  })
+}
+
+function userUpdateClick(){
+  $('.user-info-edit').unbind('click').click(function(){
+    var trId = $(this).attr("name");
+    var username = $('td[name="userInfoName'+trId+'"]').text();
+    var userEmail = $('td[name="userInfoEmail'+trId+'"]').text();
+    var userUrl = $('td[name="userInfoLinkURL'+trId+'"]').text();
+    var useridentity = $('td[name="userInfoIdentity'+trId+'"]').text();
+    
+    $('#userInfoTr' + trId).empty();
+    $('#userInfoTr' + trId).append(
+      '<td><input type="text" class="form-control" style="width: 100px" name="userInfoName'+trId+'" value="'+username+'"></td>'+
+      '<td><input type="text" class="form-control" style="width: 100px" name="userInfoEmail'+trId+'" value="'+userEmail+'"></td>'+
+      '<td><input type="text" class="form-control" style="width: 150px" name="userInfoLinkURL'+trId+'" value="'+userUrl+'"></td>'+
+      '<td><input type="text" class="form-control" style="width: 100px" name="userInfoIdentity'+trId+'" value="'+useridentity+'"></td>'+
+      '<td><span class="btn btn-xs glyphicon glyphicon-ok fs-user-update" name="'+trId+'""></span>'+
+//           ' <span class="btn btn-xs glyphicon glyphicon-remove"'+
+//            'name="'+user[0]+'"></span>'+
+      '</td>'
+    );
+    userUpdate();
+  });
+}
+
+function userUpdate(){
+  $('.fs-user-update').unbind('click').click(function(){
+    userId = $(this).attr("name");
+    var username = $('input[name="userInfoName'+userId+'"]').val();
+    var userEmail = $('input[name="userInfoEmail'+userId+'"]').val();
+    var userUrl = $('input[name="userInfoLinkURL'+userId+'"]').val();
+    var useridentity = $('input[name="userInfoIdentity'+userId+'"]').val();
+    $.ajax({
+      url: "user_update.action",
+      data: {
+        id: userId,
+        name: username,
+        Email: userEmail,
+        linkURL: userUrl,
+        identity: useridentity
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        userQuery(userId);
+      },
+      error: function(txtData){
+        alert("0.0 更新失败了？");
+        $('#adminMain').load("../html/_404.html");
+      }
+    });
+  });
+}
+
+function userQuery(user_id){
+  $.ajax({
+    url: "user_queryById.action",
+    data: {
+      id: user_id
+    },
+    type: "post",
+    datatype: "json",
+    success: function(txtData){
+      var data = $.parseJSON(txtData);
+      var user = data.queryUser;
+      $('#userInfoTr' + user_id).empty();
+      $('#userInfoTr' + user_id).append(
+        '<td name="userInfoName'+user.id+'">'+user.name+'</td>'+
+            '<td name="userInfoEmail'+user.id+'">'+user.email+'</td>'+
+            '<td name="userInfoLinkURL'+user.id+'"><a href="'+user[3]+'" target="_blank">'+user.linkURL+'</a></td>'+
+            '<td name="userInfoIdentity'+user.id+'">'+user.identity+'</td>'+
+            '<td><span class="btn btn-xs glyphicon glyphicon-pencil user-info-edit"'+
+                  'name="'+user.id+'"></span>'+
+                 ' <span class="btn btn-xs glyphicon glyphicon-remove"'+
+                  'name="'+user.id+'"></span</td>'
+      );
+    },
+    error: function(txtData){
+        alert("0.0 查找失败了？");
+        $('#adminMain').load("../html/_404.html");
+      }
+  });
+}
+
+function userDelete(){
+  $('.user-info-delete').unbind('click').click(function(){
+    var userId = $(this).attr("name");
+    $.ajax({
+      url: "user_delete.action",
+      data: {
+        id: userId
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        $('#userInfoTr' + userId).remove();
+      },
+      error: function(txtData){
+        alert("0.0 删除失败了？");
+        $('#adminMain').load("../html/_404.html");
+      } 
+    });
+  });
 }

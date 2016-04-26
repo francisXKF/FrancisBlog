@@ -16,7 +16,7 @@ public class User {
 	private String email;
 	private String linkURL;
 	private String password;  // /login can use password
-	private Integer Identity; //0 tourist 1 user 2 ? 4 admin
+	private Integer identity; //0 tourist 1 user 2 ? 4 admin
 	private Set<Article> article;
 	
 	@Id
@@ -52,10 +52,10 @@ public class User {
 		this.password = password;
 	}
 	public Integer getIdentity() {
-		return Identity;
+		return identity;
 	}
 	public void setIdentity(Integer identity) {
-		Identity = identity;
+		this.identity = identity;
 	}
 	@OneToMany(mappedBy="user",
 			fetch= FetchType.LAZY)
