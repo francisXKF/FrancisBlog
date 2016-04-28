@@ -1,9 +1,0 @@
-package com.francis.blog.util;
-
-public enum QueryConstent {
-	STEP(1);
-	private int n;
-	private QueryConstent(int n){
-		this.n = n;
-	}
-}

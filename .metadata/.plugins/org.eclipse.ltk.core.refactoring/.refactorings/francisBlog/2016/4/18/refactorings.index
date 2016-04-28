@@ -2,3 +2,6 @@
 1461576340173	Delete element
 1461589867966	Rename resource 'customAlert'
 1461589895003	Rename resource '_user_info.jsp'
+1461743480043	Move '500.html' to 'error'
+1461743566576	Rename resource '500.html'
+1461743570295	Move '500_notUse.html' to 'html'

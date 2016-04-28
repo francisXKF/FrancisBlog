@@ -374,6 +374,8 @@ function articleDelete(article_id){
   });
 }
 function articleList(){
+  $('.fs-article-bar').removeClass("active");
+  $('#listArticleLi').addClass("active");
   NProgress.start();
   $.ajax({
     url: "article_query.action",
@@ -852,21 +854,26 @@ function userQuery(user_id){
 
 function userDelete(){
   $('.user-info-delete').unbind('click').click(function(){
-    var userId = $(this).attr("name");
-    $.ajax({
-      url: "user_delete.action",
-      data: {
-        id: userId
-      },
-      type: "post",
-      datatype: "json",
-      success: function(txtData){
-        $('#userInfoTr' + userId).remove();
-      },
-      error: function(txtData){
-        alert("0.0 删除失败了？");
-        $('#adminMain').load("../html/_404.html");
-      } 
-    });
+    if(confirm("确定要删除该用户？")){
+      var userId = $(this).attr("name");
+      $.ajax({
+        url: "user_delete.action",
+        data: {
+          id: userId
+        },
+        type: "post",
+        datatype: "json",
+        success: function(txtData){
+          $('#userInfoTr' + userId).remove();
+        },
+        error: function(txtData){
+          alert("0.0 删除失败了？");
+          $('#adminMain').load("../html/_404.html");
+        } 
+      });
+    }
+    else{
+      alert("好吧 不删了");
+    }
   });
 }

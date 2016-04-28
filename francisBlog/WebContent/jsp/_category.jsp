@@ -24,7 +24,7 @@
         </a>
       </h4>
     </div>
-    <div id="categoryTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="categoryTag">
+    <div id="categoryTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="categoryTag">
       <div class="panel-body">
         <span class="label label-default">Default</span>
         <span class="label label-primary">Primary</span>
