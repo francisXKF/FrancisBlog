@@ -43,4 +43,17 @@ public class TagsTypeDaoImpl implements TagsTypeDao{
 		return true;
 	}
 
+	@Override
+	public List<String> queryByArticleId(Integer id) {
+		/*String sqlString = "select tags.name as name "
+				+ "(from TagsType tags left join article_tagstype art_tags on tags.id=art_tags.tagstype_id) "
+				+ "left join Article art on art.id=art_tags.article_id where art.id=" + id;*/
+		String sqlString = "select tags.name as name "
+				+ "from TagsType tags left join tags.article art "
+				+ "where art.id=" + id
+				+ " order by name desc";
+		List<String> tagsnameList = currentSession().createQuery(sqlString).list();
+		return tagsnameList;
+	}
+
 }

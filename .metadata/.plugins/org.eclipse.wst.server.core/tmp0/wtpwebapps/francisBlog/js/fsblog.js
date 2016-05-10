@@ -250,9 +250,11 @@ function articleDetail(){
               success: function(txtData){
                 var data = $.parseJSON(txtData);
                 var article = data[0];
+                
                 $('.fs-article-title').html(article.title);
                 $('.fs-article-info').html('<a href="#" name='+article.user+'>'+article.user+'</a>'+
-                            '发表于'+article.post_date+' | 分类：<a href="#">'+article.articleType+'</a> | <a href="#">评论</a>');
+                            '发表于'+article.post_date+' | 分类：<a href="#">'+article.articleType+'</a>'+
+                            ' | Tags：<a href="javascript:void(0)">' +article.tagsType) + '</a>';
                 $('.fs-article-content').html(article.content);
                 articleUpdateClick(article);
                 articleDelete(article.id);
@@ -391,6 +393,20 @@ function articleList(){
       $('#listMain').empty();
       $(data).each(function(i){
         var article = data[i];
+        /*var tagsShow = '<div></div>';
+        alert(article.tagsType);
+        var tagsTypeStr = new String();
+        tagsTypeStr = article.tagsType;
+        var tagsType = tagsTypeStr.split(" ");
+        alert(tagsType);
+        $.each(tagsType, function(n, value){
+          alert("enter");
+          alert(value);
+          $(tagsShow).append('<a href="javascript:void(0)"'+value+'</a>');
+        });*/
+        /*alert(article.tagsType);
+        $(tagsShow).append('<a href="javascript:void(0)"'+article.tagsType+'</a>');
+        alert(tagsShow);*/
         $('#listMain').append(
           '<div class="panel panel-default">'+
             '<div class="panel-heading">'+
@@ -398,14 +414,15 @@ function articleList(){
               '<div class="fs-article-meta">'+
                 '<a href="#" id="art" name="'+article.user+'">'+article.user+
                     '</a>发表于<span name="'+article.post_date+'">'+article.post_date+'</span> |'+
-                  '分类：<a href="#" name="'+article.articleType+'">'+article.articleType+'</a> | <a href="#">评论</a>'+
+                    '分类：<a href="#" name="'+article.articleType+'">'+article.articleType+'</a>'+
+                    ' | Tags：<a href="javascript:void(0)">'+article.tagsType+'</a>'+
               '</div>'+
             '</div>'+
             '<div class="panel-body">'+article.content+
+            '<a href="#" class="text-primary fs-article-title" id="'+article.id+'">查看全文...</a>'+
             '</div>'+
           '</div>'
-        )
-        
+        );
       });
       NProgress.done();
       articleDetail();

@@ -1,11 +1,13 @@
 package com.francis.blog.daoImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -51,6 +53,22 @@ public class ArticleDaoImpl implements ArticleDao{
 		return articleList.get(0);
 	}
 
+	@Override
+	public Map<String, Object> queryByIdDetail(Integer id) {
+		String sqlString = "select art.id as id, art.title as title, art.post_date as post_date, "
+				+ "art.content as content, artt.name as arttname, user.name as username "
+				+ "from (Article art left join ArticleType artt on art.articleType_id = artt.id) "
+				+ "left join User user on art.user_id = user.id "
+				+ "where art.id="+id;
+		List<Map<String, Object>> articleList = currentSession().createSQLQuery(sqlString)
+									.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+									.list();
+		if(articleList.isEmpty()){
+			return null;
+		}
+		return articleList.get(0);
+	}
+	
 	@Override
 	public Article queryByUserId(Integer user_id) {
 		String sqlString = "from Article art where art.user.id=" + user_id;

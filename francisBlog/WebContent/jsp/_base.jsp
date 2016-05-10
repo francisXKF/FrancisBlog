@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="${contextPath }util/nprogress/nprogress.css">
 <!--<link rel="stylesheet" href="${contextPath }util/customAlert/css/style.css">  -->
 
+<link rel="icon" href="../img/FSBlog.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../img/FSBlog.ico" type="image/x-icon" />
+
 <script src="${contextPath }util/nprogress/nprogress.js"></script>
 <!--<script src="${contextPath }util/customAlert/js/index.js"></script>  -->
 <script src="${contextPath }js/jquery.min.js"></script>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="javax.persistence.FetchType"/>
 <fullyQualifiedTypeName name="net.sf.json.util.CycleDetectionStrategy"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="net.sf.json.JSONArray"/>
@@ -13,8 +10,6 @@
 <fullyQualifiedTypeName name="net.sf.json.JsonConfig"/>
 <fullyQualifiedTypeName name="com.francis.blog.util.ObjectJsonValueProcessor"/>
 <fullyQualifiedTypeName name="org.eclipse.jdt.internal.compiler.env.IGenericField"/>
-<fullyQualifiedTypeName name="com.francis.blog.pojo.ArticleType"/>
-<fullyQualifiedTypeName name="com.francis.blog.pojo.TagsType"/>
 <fullyQualifiedTypeName name="java.lang.Class"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Field"/>
 <fullyQualifiedTypeName name="com.francis.blog.util.GetClassFieldName"/>
@@ -26,7 +21,6 @@
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="net.sf.json.JSONObject"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
 <fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
 <fullyQualifiedTypeName name="org.hibernate.SessionFactory"/>
@@ -34,30 +28,36 @@
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="org.apache.struts2.ServletActionContext"/>
 <fullyQualifiedTypeName name="com.francis.blog.dao.MottoDao"/>
-<fullyQualifiedTypeName name="java.sql.Timestamp"/>
 <fullyQualifiedTypeName name="com.francis.blog.service.MottoManager"/>
 <fullyQualifiedTypeName name="com.francis.blog.pojo.Motto"/>
 <fullyQualifiedTypeName name="org.hibernate.sql.Update"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
-<fullyQualifiedTypeName name="java.lang.Object"/>
-<fullyQualifiedTypeName name="org.hibernate.transform.Transformers"/>
 <fullyQualifiedTypeName name="org.hibernate.sql.Delete"/>
 <fullyQualifiedTypeName name="com.francis.blog.service.CommentsManager"/>
-<fullyQualifiedTypeName name="com.francis.blog.service.ArticleManager"/>
 <fullyQualifiedTypeName name="com.francis.blog.dao.CommentsDao"/>
 <fullyQualifiedTypeName name="com.francis.blog.dao.ArticleDao"/>
 <fullyQualifiedTypeName name="javax.annotation.Resource"/>
 <fullyQualifiedTypeName name="com.francis.blog.pojo.Comments"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="com.francis.blog.pojo.Article"/>
 <fullyQualifiedTypeName name="com.francis.blog.dao.UserDao"/>
 <fullyQualifiedTypeName name="javax.servlet.Filter"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
-<fullyQualifiedTypeName name="com.francis.blog.pojo.User"/>
-<fullyQualifiedTypeName name="com.francis.blog.util.QueryConstent"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="org.hibernate.transform.Transformers"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="com.francis.blog.pojo.ArticleType"/>
+<fullyQualifiedTypeName name="com.francis.blog.pojo.User"/>
+<fullyQualifiedTypeName name="com.francis.blog.service.ArticleManager"/>
+<fullyQualifiedTypeName name="java.sql.Timestamp"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="com.francis.blog.pojo.Article"/>
+<fullyQualifiedTypeName name="com.francis.blog.util.QueryConstent"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="com.francis.blog.pojo.TagsType"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.lang.Object"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 </qualifiedTypeNameHistroy>

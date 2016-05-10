@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +30,6 @@ import com.francis.blog.util.GetClassFieldName;
 import com.francis.blog.util.ObjectJsonValueProcessor;
 import com.francis.blog.util.QueryConstent;
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 
 @Component("article")
 @Scope("prototype")
@@ -132,17 +132,17 @@ public class ArticleAction extends ActionSupport{
 		post_date = new java.sql.Timestamp(now_date.getTime());
 		
 		articleType.setName(article_type_name); //有session可以删除
-		tags_typeList = tags_typeString.split("//s+");
+		tags_typeList = tags_typeString.split("\\s+");
 		int length = tags_typeList.length;
 		TagsType tagsTypeSingle;
 		for(int i = 0; i < length; i++){
+			System.out.println("save action.............." + tags_typeList[i]);
 			tagsTypeSingle = new TagsType();
 			tagsTypeSingle.setName(tags_typeList[i]);
 			tagsType.add(tagsTypeSingle);
 		}
 		
 		if(user == null || title.equals("") || articleType.equals("")){
-			System.out.println("null le ya");
 			errorMsg = "关键字段不能为空啊";
 			map.put("status", "failed");
 			map.put("errorMsg", errorMsg);
@@ -199,7 +199,6 @@ public class ArticleAction extends ActionSupport{
 		}
 		
 		if(user == null || title.equals("") || articleType.equals("")){
-			System.out.println("null le ya");
 			errorMsg = "关键字段不能为空啊";
 			map.put("status", "failed");
 			map.put("errorMsg", errorMsg);
@@ -258,7 +257,20 @@ public class ArticleAction extends ActionSupport{
 		}
 		
 		List<Article> articleList = articleManager.query(article, start * step);
-		map.put("articleList", articleList);
+		List<Article> subArticleList = new ArrayList<Article>();
+		//Article subArticle;
+		Iterator<Article> articleIterator = articleList.iterator();
+		while(articleIterator.hasNext()){
+			Article articleItem = articleIterator.next();
+			articleItem.setContent(articleItem.getContent()
+							.replaceAll("<img[^>]*>", ""));
+			if(articleItem.getContent().length() > QueryConstent.ARTICLE_ABSTRACT){
+				articleItem.setContent(articleItem.getContent()
+										.substring(0, QueryConstent.ARTICLE_ABSTRACT));
+			}
+			subArticleList.add(articleItem);
+		}
+		map.put("articleList", subArticleList);
 		map.put("status", "success");
 		/*该方法可能只解决obj的时候，若用list，需要另一种解决。
 		JsonConfig jsonConfig = new JsonConfig();

@@ -1,5 +1,0 @@
-package com.francis.blog.filter;
-
-public class AdminPermissionFilter {
-
-}

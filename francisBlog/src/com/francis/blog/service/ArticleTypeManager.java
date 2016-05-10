@@ -7,4 +7,5 @@ import com.francis.blog.pojo.ArticleType;
 
 public interface ArticleTypeManager {
 	public List<Map<String, Object>> query(ArticleType articleType);
+	public boolean update(ArticleType articleType);
 }

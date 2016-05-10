@@ -17,7 +17,7 @@
       <div class="fs-top">
         <div class="fs-top-user fs-float-left">
           <div class="page-header">
-            <h1>告诉我，你的人生座右铭是啥子 
+            <h1> 
             <%
             	Motto motto = (Motto)session.getAttribute("motto");
             	if(motto == null){
@@ -39,7 +39,7 @@
             </div>
             <!--   分类    -->
             <div id="categoryPlace">
-            //<jsp:include page="/jsp/_category.jsp" flush="true" />
+            <jsp:include page="/jsp/_category.jsp" flush="true" />
             </div>
           </div>
           <div class="fs-span9">

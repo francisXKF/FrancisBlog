@@ -1,8 +1,11 @@
 package com.francis.blog.serviceImpl;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -16,6 +19,7 @@ import com.francis.blog.dao.UserDao;
 import com.francis.blog.pojo.Article;
 import com.francis.blog.pojo.ArticleType;
 import com.francis.blog.pojo.TagsType;
+import com.francis.blog.pojo.User;
 import com.francis.blog.service.ArticleManager;
 
 @Component("articleManager")
@@ -50,7 +54,29 @@ public class ArticleManagerImpl implements ArticleManager{
 
 	@Override
 	public Article queryById(Integer id) {
-		return articleDao.queryById(id);
+		Map<String, Object> articleMap = articleDao.queryByIdDetail(id);
+		Article article = new Article();
+		ArticleType articleType = new ArticleType();
+		User user = new User();
+		user.setName((String)articleMap.get("username"));
+		articleType.setName((String)articleMap.get("arttname"));
+		article.setId((Integer)articleMap.get("id"));
+		article.setTitle((String)articleMap.get("title"));
+		article.setArticleType(articleType);
+		article.setUser(user);
+		article.setContent((String)articleMap.get("content"));
+		article.setPost_date((Timestamp)articleMap.get("post_date"));
+		List<String> tagsNameList = tagsTypeDao.queryByArticleId(id);
+		int length = tagsNameList.size();
+		TagsType tagsType;
+		Set<TagsType> tagsTypeSet = new HashSet<TagsType>();
+		for(int i = 0; i < length; i++){
+			tagsType = new TagsType();
+			tagsType.setName(tagsNameList.get(i));
+			tagsTypeSet.add(tagsType);
+		}
+		article.setTagsType(tagsTypeSet);
+		return article;
 	}
 	
 	@Override

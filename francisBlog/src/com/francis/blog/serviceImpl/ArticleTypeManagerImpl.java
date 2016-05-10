@@ -25,5 +25,10 @@ public class ArticleTypeManagerImpl implements ArticleTypeManager{
 	public List<Map<String, Object>> query(ArticleType articleType) {
 		return articleTypeDao.query(articleType);
 	}
+	
+	@Override
+	public boolean update(ArticleType articleType){
+		return articleTypeDao.update(articleType);
+	}
 
 }

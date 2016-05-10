@@ -2,11 +2,17 @@ package com.francis.blog.util;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import com.francis.blog.pojo.ArticleType;
 import com.francis.blog.pojo.TagsType;
 import com.francis.blog.pojo.User;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
@@ -48,11 +54,36 @@ public class ObjectJsonValueProcessor implements JsonValueProcessor {
 				method = pd.getReadMethod();
 				Object obj = method.invoke(value);
 				String v = String.valueOf(method.invoke(value));
+				//System.out.println(v + "  one ......................................."+obj.getClass()+".............................................");
+
 				if(obj instanceof ArticleType){
 					v = ((ArticleType) obj).getName();
 				}
-				if(obj instanceof TagsType){
-					v = ((TagsType) obj).getName();;
+				//该方法有错，不能处理set类型的tagstype
+				if(obj instanceof org.hibernate.collection.internal.PersistentSet){
+					Set<TagsType> tagsTypes = (Set<TagsType>)obj;
+					List<String> tagsNameList = new ArrayList<String>();
+					Iterator<TagsType> iterator = tagsTypes.iterator();
+					while(iterator.hasNext()){
+						tagsNameList.add(iterator.next().getName());
+					}
+					String tagsNameJSONModel = JSONArray.fromObject(tagsNameList).toString();
+
+					json.append("'"+properties[i]+"':'"+tagsNameJSONModel+"'");
+					json.append(i != properties.length-1?",":"");
+					continue;				}
+				if(obj instanceof HashSet){
+					Set<TagsType> tagsTypes = (Set<TagsType>)obj;
+					List<String> tagsNameList = new ArrayList<String>();
+					Iterator<TagsType> iterator = tagsTypes.iterator();
+					while(iterator.hasNext()){
+						tagsNameList.add(iterator.next().getName());
+					}
+					String tagsNameJSONModel = JSONArray.fromObject(tagsNameList).toString();
+			
+					json.append("'"+properties[i]+"':'"+tagsNameJSONModel+"'");
+					json.append(i != properties.length-1?",":"");
+					continue;
 				}
 				if(obj instanceof User){
 					v = ((User) obj).getName();
