@@ -11,5 +11,5 @@ public interface ArticleManager {
 	public boolean update(Article article);
 	public boolean delete(Article article);
 	public boolean insert(Article article);
-
+	public boolean saveAsWord(String content, String path) throws Exception;
 }

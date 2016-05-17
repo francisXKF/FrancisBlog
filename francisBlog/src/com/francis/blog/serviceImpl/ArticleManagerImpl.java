@@ -21,6 +21,7 @@ import com.francis.blog.pojo.ArticleType;
 import com.francis.blog.pojo.TagsType;
 import com.francis.blog.pojo.User;
 import com.francis.blog.service.ArticleManager;
+import com.francis.blog.util.WordOperate;
 
 @Component("articleManager")
 public class ArticleManagerImpl implements ArticleManager{
@@ -134,6 +135,13 @@ public class ArticleManagerImpl implements ArticleManager{
 		}
 		article.setTagsType(tagsTypesQueryed);
 		articleDao.insert(article);
+		return true;
+	}
+
+	@Override
+	public boolean saveAsWord(String content, String path) throws Exception{
+		WordOperate wordOperate = new WordOperate();
+		wordOperate.saveAsWord(content, path);
 		return true;
 	}
 

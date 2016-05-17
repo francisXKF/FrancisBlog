@@ -13,11 +13,12 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="articleUpdateClick" key="selection"/>
+		<item value="Sys" key="selection"/>
 		<list key="findhistory">
+			<item value="sys"/>
+			<item value="ObjectJsonValueProcessor"/>
 			<item value="articleUpdateClick"/>
 			<item value="queryById"/>
-			<item value="sys"/>
 			<item value="system"/>
 		</list>
 		<list key="replacehistory">

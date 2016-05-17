@@ -64,13 +64,22 @@ public class UserDaoImpl implements UserDao{
 	
 	@Override
 	public User queryByName(String name) {
-		String sqlString = "from User where name=?";
-		List<User> userList = currentSession().createQuery(sqlString)
-							.setParameter(0, name).list();
+		String sqlString = "select id, name, email, linkURL, identity from User where name='" + name + "'";
+		List<Map<String, Object>> userList = currentSession().createSQLQuery(sqlString)
+				.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+		
 		if(userList.isEmpty()){
 			return null;
 		}
-		return userList.get(0);
+		
+		Map<String, Object> userMap = userList.get(0);
+		User user = new User();
+		user.setId((Integer)userMap.get("id"));
+		user.setName((String)userMap.get("name"));
+		user.setEmail((String)userMap.get("email"));
+		user.setLinkURL((String)userMap.get("linkURL"));
+		
+		return user;
 	}
 
 	@Override

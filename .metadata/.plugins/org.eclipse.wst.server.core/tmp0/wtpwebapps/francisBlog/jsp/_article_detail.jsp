@@ -10,6 +10,7 @@
         <!--<a href="#">francisXu</a>发表于2012-01-01 01:01:01 | 分类：<a href="#">其他</a> | <a href="#">评论</a>-->
       </div>
     </div>
+    <a href="javascript:void(0)" class="btn btn-info pull-right" id="articleLoadWord">下载</a><br>
     <div class="panel-body fs-article-content"><!--
       <p>毕业项目中的一部分，开始挖坑，想起多少写下来。</p>
 

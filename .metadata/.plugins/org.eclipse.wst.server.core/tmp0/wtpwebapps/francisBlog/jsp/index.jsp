@@ -11,6 +11,9 @@
   </head>
   <body>
     <div class="container">
+      
+      <!--   用于用户浮动窗口 -->
+      <div id="userInfoFloatDiv" ></div>
       <div class="fs-menu">
         <%@ include file="../jsp/_navigation_bar.jsp" %>
       </div>

@@ -231,6 +231,7 @@ function articleDetail(){
   $('.fs-article-title').unbind('click').click(function(){
 //    var nowId = $(this).attr('id');
 //    alert(nowId);
+    NProgress.start();
     $('.fs-article-bar').removeClass("active");
     $('#listArticleLi').addClass("active");
     var id = $(this).attr("id");
@@ -252,15 +253,18 @@ function articleDetail(){
                 var article = data[0];
                 
                 $('.fs-article-title').html(article.title);
-                $('.fs-article-info').html('<a href="#" name='+article.user+'>'+article.user+'</a>'+
-                            '发表于'+article.post_date+' | 分类：<a href="#">'+article.articleType+'</a>'+
+                $('.fs-article-info').html('<a href="javascript:void(0)" class="fs-user" name="'+article.user+'">'+article.user+'</a>'+
+                            '发表于'+article.post_date+' | 分类：<a href="javascript:void(0)">'+article.articleType+'</a>'+
                             ' | Tags：<a href="javascript:void(0)">' +article.tagsType) + '</a>';
                 $('.fs-article-content').html(article.content);
                 articleUpdateClick(article);
                 articleDelete(article.id);
                 articleReplyLoad(article.id);
                 commentAddClick(article.id);
+                articleLoadWord(article.id, article.title);
                 
+                NProgress.done();
+                userInfoShow();
               }
             });
           }
@@ -271,6 +275,33 @@ function articleDetail(){
       }
       if(statusTxt=="error"){
         $('#main').load("../html/_404.html");
+      }
+    });
+  });
+}
+
+function articleLoadWord(article_id, article_title){
+  $('#articleLoadWord').unbind('click').click(function(){
+    var save_path = prompt("请输入要存放的文件位置信息", "C:/Users/dell/Desktop/"+article_title+".doc");
+    $.ajax({
+      url: "article_saveAsWord.action",
+      data: {
+        id: article_id,
+        save_path: save_path
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        data = $.parseJSON(txtData);  
+        if(data.status == "success"){
+          alert("下载完成");
+        }
+        else{
+          alert("啊哦，下载过程中出现未知错误");
+        }
+      },
+      error: function(txtData){
+        alert("啊哦,下载过程中出现未知错误");
       }
     });
   });
@@ -410,16 +441,16 @@ function articleList(){
         $('#listMain').append(
           '<div class="panel panel-default">'+
             '<div class="panel-heading">'+
-              '<h3 class="panel-title"><a href="#" class="text-primary fs-article-title" id="'+article.id+'">'+article.title+'</a></h3>'+
+              '<h3 class="panel-title"><a href="javascript:void(0)" class="text-primary fs-article-title" id="'+article.id+'">'+article.title+'</a></h3>'+
               '<div class="fs-article-meta">'+
-                '<a href="#" id="art" name="'+article.user+'">'+article.user+
+                '<a href="javascript:void(0)" class="fs-user"  name="'+article.user+'">'+article.user+
                     '</a>发表于<span name="'+article.post_date+'">'+article.post_date+'</span> |'+
-                    '分类：<a href="#" name="'+article.articleType+'">'+article.articleType+'</a>'+
+                    '分类：<a href="javascript:void(0)" name="'+article.articleType+'">'+article.articleType+'</a>'+
                     ' | Tags：<a href="javascript:void(0)">'+article.tagsType+'</a>'+
               '</div>'+
             '</div>'+
             '<div class="panel-body">'+article.content+
-            '<a href="#" class="text-primary fs-article-title" id="'+article.id+'">查看全文...</a>'+
+            '<a href="javascript:void(0)" class="text-primary fs-article-title" id="'+article.id+'">查看全文...</a>'+
             '</div>'+
           '</div>'
         );
@@ -427,6 +458,7 @@ function articleList(){
       NProgress.done();
       articleDetail();
       pageBarLoad();
+      userInfoShow();
     },
     error: function(txtData){
         alert("啊哦，文章列表拿不到了");
@@ -518,7 +550,8 @@ function articleReplyLoad(article_id){
           var data = $.parseJSON(txtData);
           $(data).each(function(i){
             var comments = data[i];
-            var baseInfo = '<a href="#" id="'+comments.user+'">'+comments.user+'</a>回复于：'+
+            var baseInfo = '<a href="javascript:void(0)" class="fs-user" '+
+                                'name="'+comments.user+'" id="'+comments.user+'">'+comments.user+'</a>回复于：'+
                             '<span class="text-muted">'+comments.comment_date+'</span>'+
                             '<a href="#commentMain">'+
                             '<span class="btn btn-xs glyphicon glyphicon-comment fs-reply-btn" name="'+comments.id+'">'
@@ -541,6 +574,7 @@ function articleReplyLoad(article_id){
             }
           });
           commentAddClick(article_id);
+          userInfoShow();
         },
         error: function(txtData){
           alert("咦？评论呢？");
@@ -572,7 +606,7 @@ function commentNew(){
             '<tr>'+
               '<td>'+
                 '<div class="fs-article-meta">'+
-                  '<a href="#">'+comments[0]+'</a> : <span>评论了你的文章</span> :'+ 
+                  '<a href="javascript:void(0)" class="fs-user" name="'+comments[0]+'">'+comments[0]+'</a> : <span>评论了你的文章</span> :'+ 
                   '<span>'+
                       '<a href="javascript:void(0)" id="'+comments[1]+'" class="text-primary fs-article-title">'+comments[2]+'</a>'+
                   '</span>'+
@@ -585,6 +619,7 @@ function commentNew(){
           );
         });
         articleDetail();
+        userInfoShow();
       }
     });
   //});
@@ -604,18 +639,18 @@ function pageBarLoad(){
       var cnt = data.cnt;
       $('#pageBar').empty();
       $('#pageBar').append('<li id="pageBarLeft">'+
-                    '<a href="#" aria-label="Previous">'+
+                    '<a href="javascript:void(0)" aria-label="Previous">'+
                     '<span aria-hidden="true">&laquo;</span>'+
                     '</a>'+
                     '</li>');
       for(i = 0; i < cnt; i++){
         $('#pageBar').append(
-                  '<li name="pageBarLi'+ i +'"><a href="#"><span>'+
+                  '<li name="pageBarLi'+ i +'"><a href="javascript:void(0)"><span>'+
                   i+'</span></a></li>'
         );
       }
       $('#pageBar').append('<li id="pageBarRight">'+
-                    '<a href="#" aria-label="Next">'+
+                    '<a href="javascript:void(0)" aria-label="Next">'+
                     '<span aria-hidden="true">&raquo;</span>'+
                     '</a>'+
                     '</li>'
@@ -893,4 +928,48 @@ function userDelete(){
       alert("好吧 不删了");
     }
   });
+}
+
+function userInfoShow(){
+  $('.fs-user').unbind('click').click(function(e){
+    var x_pos = e.pageX;
+    var y_pos = e.pageY;
+    var username = $(this).attr("name");
+    $.ajax({
+      url: "user_queryByName.action",
+      data: {
+        name: username
+      },
+      type: "post",
+      datatype: "json",
+      success: function(txtData){
+        data = $.parseJSON(txtData);
+        var user = data.queryUser;
+        var userInfoDivStr = '<div class="panel panel-default">'+
+                                '<div class="panel-heading">个人信息</div>'+
+                                '<div class="panel-body">'+
+                                  '<span class="glyphicon glyphicon-user"></span>'+user.name+'<br>'+
+                                  '<span class="glyphicon glyphicon-envelope"></span>'+user.email+'<br>'+
+                                  '<span class="glyphicon glyphicon-link"></span>'+
+                                      '<a href="'+user.linkURL+'" target="_blank">'+user.linkURL+'<br>'+
+                                '</div>'+
+                              '</div>';
+        $('#userInfoFloatDiv').stop();
+        $('#userInfoFloatDiv').empty();
+        
+        $('#userInfoFloatDiv').append(userInfoDivStr);
+        $('#userInfoFloatDiv').css({"background-color": "#ADD8E6", "position": "absolute", "left": x_pos, "top": y_pos, "z-index": "1"});
+        $('#userInfoFloatDiv').fadeIn(100);
+        userInfoHide();
+      }
+    });
+  });
+}
+
+function userInfoHide(){
+  $('.fs-user').mouseleave(function(e){
+    $('#userInfoFloatDiv').fadeOut(10000, function(){
+      $(this).empty();
+    });
+  })
 }
