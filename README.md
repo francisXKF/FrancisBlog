@@ -7,6 +7,7 @@
 + NavicatForMySQL+Astah+PD
 + 各种开源项目
 + 一台总是卡的PC
+
 ## 截图展示
 + 登录
   ![image](https://github.com/francisXKF/FrancisBlog/blob/master/FrancisBlogScreenImg/login.jpg)
@@ -20,4 +21,3 @@
   ![image](https://github.com/francisXKF/FrancisBlog/blob/master/FrancisBlogScreenImg/commend_list.jpg)
 + 后台
   ![image](https://github.com/francisXKF/FrancisBlog/blob/master/FrancisBlogScreenImg/admin.jpg)
-
